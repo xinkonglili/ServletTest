@@ -1,22 +1,11 @@
 package com.nankang.pojo;
-
 import java.util.Date;
 
 public class User {
     private Integer id;
     private String userName;
-    private Integer userId;
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
+    private String userCode;
     private String password;
-   // @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai") //定义日期的格式
     private Date createTime;
     private String unit; //所属单位
     private String department; //所属部门
@@ -35,6 +24,14 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 
     public String getPassword() {
@@ -68,4 +65,7 @@ public class User {
     public void setDepartment(String department) {
         this.department = department;
     }
+
+
+
 }
