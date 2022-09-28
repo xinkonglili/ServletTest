@@ -31,11 +31,19 @@ public class UserServiceImpl implements UserService{
             //关闭资源
             BaseDao.closeResource(connection,null,null);
         }
+
+        //前端拿到用户的密码和数据库里面的密码进行比对，如果相等则用户登录成功
+        if (null != user){
+            if (!user.getPassword().equals(password)){
+                user = null;
+            }
+        }
         return user;
     }
     @Test
     public void test(){
         UserServiceImpl userService = new UserServiceImpl();
+        //service层的login接口
         User admin = userService.login("admin","1234567");
         System.out.println(admin.getPassword());
 
