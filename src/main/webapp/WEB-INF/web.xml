@@ -13,6 +13,17 @@
         <url-pattern>/login.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <description></description>
+        <display-name>CodeServlet</display-name>
+        <servlet-name>CodeServlet</servlet-name>
+        <servlet-class>com.nankang.servlet.CodeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CodeServlet</servlet-name>
+        <url-pattern>/code</url-pattern>
+    </servlet-mapping>
+
     <!-- 设置欢迎页面-->
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>

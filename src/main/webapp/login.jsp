@@ -1,5 +1,5 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -31,17 +31,14 @@
 
                 <div class="inputboxId">
                     <label >验证码：</label>
-                    <input type="password" id="userIdCode" name="userIdCode" placeholder="请输入验证码" required/>
-                    <div class="authcode">
-
-                    </div>
+                    <%--Math.random()防止有缓存--%>
+                    <input type="password" id="userIdCode" name="userIdCode" placeholder="请输入验证码" required/><img src="code" style="padding: 2px" onclick="this.src='code?'+Math.random();"><br/><br/>
                 </div>
 
-                </div>
-				<div class="subBtn">
+
+                <div class="subBtn">
 					
                     <input type="submit" value="登录"/>
-                    <input type="reset" value="重置"/>
                 </div>	
 			</form>
         </section>

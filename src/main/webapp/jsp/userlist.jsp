@@ -34,7 +34,7 @@
                 <tr class="firstTr">
                     <th width="10%">用户编码</th>
                     <th width="20%">用户名称</th>
-                    <th width="10%">性别</th>
+                    <th width="10%">单位</th>
                     <th width="10%">年龄</th>
                     <th width="10%">电话</th>
                     <th width="10%">用户角色</th>
