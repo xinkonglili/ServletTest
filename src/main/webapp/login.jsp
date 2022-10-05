@@ -32,8 +32,10 @@
                 <div class="inputboxId">
                     <label >验证码：</label>
                     <%--Math.random()防止有缓存--%>
-                    <input type="password" id="userIdCode" name="userIdCode" placeholder="请输入验证码" required/><img src="code" style="padding: 2px" onclick="this.src='code?'+Math.random();"><br/><br/>
+                    <input type="password" id="userIdCode" name="userIdCode" placeholder="请输入验证码" required/><img src="code" style="padding: 4px; margin: -15px;margin-left: 4px;" onclick="this.src='code?'+Math.random();"><br/><br/>
                 </div>
+
+
 
 
                 <div class="subBtn">

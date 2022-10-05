@@ -12,6 +12,15 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login.do</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>LoginTime</servlet-name>
+        <servlet-class>com.nankang.servlet.user.LoginTime</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginTime</servlet-name>
+        <url-pattern>/LoginTime</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <description></description>

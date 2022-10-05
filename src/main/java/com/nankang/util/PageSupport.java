@@ -1,5 +1,6 @@
 package com.nankang.util;
 
+//支持分页的类
 public class PageSupport {
 	//当前页码-来自于用户输入
 	private int currentPageNo = 1;

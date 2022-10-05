@@ -1,4 +1,5 @@
 package com.nankang.pojo;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class User {
@@ -6,7 +7,7 @@ public class User {
     private String userName;
     private String userCode;
     private String password;
-    private Date createTime;
+    private String createTime;
     private String unit; //所属单位
     private String department; //所属部门
 
@@ -42,12 +43,14 @@ public class User {
         this.password = password;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy日MM年dd月 HH:mm:ss");
+        this.createTime = sdf.format(date);;
     }
 
     public String getUnit() {

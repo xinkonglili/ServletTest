@@ -11,6 +11,7 @@ public interface UserDao {
     public User getLoginUser(Connection connection, String userCode) throws SQLException;
     //通过用户输入的条件来查询用户列表
     //public List<User> getUserList(Connection connection, String userName, int )
+    public User insertUserLogLogin(Connection connection, String userCode) throws SQLException;
 
 
 

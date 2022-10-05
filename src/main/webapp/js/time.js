@@ -3,7 +3,7 @@ function fn(){
     var time = new Date();
     var str= "";
     var div = document.getElementById("time");
-//    console.log(time);
+    console.log(time);
     var year = time.getFullYear();
     var mon = time.getMonth()+1;
     var day = time.getDate();
@@ -40,4 +40,6 @@ function totwo(n){
         return n =""+n;
     }
 }
+
+
 
