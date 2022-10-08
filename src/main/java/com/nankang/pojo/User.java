@@ -8,7 +8,20 @@ public class User {
     private String userCode;
     private String password;
     private String createTime;
-    private String unit; //所属单位
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUnitRole() {
+        return unitRole;
+    }
+
+    public void setUnitRole(String unitRole) {
+        this.unitRole = unitRole;
+    }
+
+    private String unitRole; //所属单位
     private String department; //所属部门
 
     public Integer getId() {
@@ -53,13 +66,6 @@ public class User {
         this.createTime = sdf.format(date);;
     }
 
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
 
     public String getDepartment() {
         return department;

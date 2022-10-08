@@ -2,6 +2,8 @@ package com.nankang.pojo;
 
 public class Unit { //单位表
     private Integer unitCode;
+    private String userCode;
+    private String userName;
     private String unitName;
     private String address;
     private String fax;
@@ -15,6 +17,14 @@ public class Unit { //单位表
         this.unitCode = unitCode;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getUnitName() {
         return unitName;
     }
@@ -23,6 +33,13 @@ public class Unit { //单位表
         this.unitName = unitName;
     }
 
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
+    }
     public String getAddress() {
         return address;
     }

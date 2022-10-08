@@ -11,6 +11,7 @@ function fn(){
     var m = time.getMinutes();
     var s = time.getSeconds();
     var week = time.getDay();
+    
     switch (week){
         case 0:week="日";
             break;
