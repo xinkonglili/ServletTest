@@ -86,6 +86,40 @@ public class UserServiceImpl implements UserService{
         return userList;
     }
 
+    @Override
+    public Boolean add(User user) throws Exception {
+        boolean flag = false;
+        Connection connection = null;
+
+        try {
+            //获取连接
+            connection = BaseDao.getConnection();
+            //开启jdbc事务管理
+            connection.setAutoCommit(false);
+            //调用dao层的接口
+            int updateRows = userDao.add(connection, user);
+            connection.commit();
+            if (updateRows>0){
+                flag = true;
+                System.out.println("Add success!");
+            }else {
+                System.out.println("Add failed!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                //失败就回滚
+                connection.rollback();
+            }catch (SQLException e1){
+                e1.printStackTrace();
+            }
+        }finally {
+        //在service层对connection的关闭
+            BaseDao.closeResource(connection,null,null);
+        }
+        return flag;
+    }
+
 
     @Test
     public void test() throws SQLException {

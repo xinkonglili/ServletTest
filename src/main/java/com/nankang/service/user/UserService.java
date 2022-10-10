@@ -1,5 +1,6 @@
 package com.nankang.service.user;
 
+import com.nankang.dao.BaseDao;
 import com.nankang.pojo.User;
 
 import java.sql.SQLException;
@@ -14,4 +15,6 @@ public interface UserService {
 
     //根据条件查询用户列表
     public List<User> getUserList(String queryUserName, int queryUnitRole, int currentPageNo, int pageSize);
+
+    public Boolean add(User user) throws Exception;
 }

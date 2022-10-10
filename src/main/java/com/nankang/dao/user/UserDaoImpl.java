@@ -93,7 +93,7 @@ public class UserDaoImpl implements UserDao {
         List<User> userList = new ArrayList<User>();
         if (connection != null){
             StringBuffer sql = new StringBuffer();
-            sql.append("select us.*, un.unitname as userRoleName from `user` us, `unit` un where un.`unitcode` = us.`unitrole`");
+            sql.append("select DISTINCT us.*, un.unitname as userRoleName from `user` us, `unit` un where un.`unitcode` = us.`unitrole`");
             List<Object> list = new ArrayList<Object>();
             if (!StringUtils.isNullOrEmpty(userName)) { //如果用户名不为空
                 sql.append(" and us.userName like ?");//sql语句的拼接
@@ -105,7 +105,7 @@ public class UserDaoImpl implements UserDao {
                 list.add(unitRole); //index = 1
             }
 
-            sql.append(" order by creationDate desc limt ?,?");
+            sql.append(" order by create_time desc limit ?,?");
             currentPageNo = (currentPageNo-1) * pageSize;
             list.add(currentPageNo);
             list.add(pageSize);
@@ -113,7 +113,7 @@ public class UserDaoImpl implements UserDao {
             Object[] params = list.toArray();
             System.out.println("sql------>"+ sql.toString());
             rs = BaseDao.execute(connection, sql.toString(),params,rs, pstm);
-            if (rs.next()){
+            while (rs.next()){
                 User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setUserCode(rs.getString("usercode"));
@@ -126,7 +126,31 @@ public class UserDaoImpl implements UserDao {
             }
             BaseDao.closeResource(null,pstm,rs);
         }
+        System.out.println("userList------------"+userList);
+        for (User user : userList){
+           /* ����
+            admin
+            1*/
+            System.out.println(user.getUserName());
+            System.out.println(user.getUserCode());
+            System.out.println(user.getUnitRole());
+        }
         return userList ;
+    }
+
+    @Override
+    public int add(Connection connection, User user) throws Exception {
+        PreparedStatement pstm = null;
+        int updateNum =0;
+        if (connection!=null){
+            String sql = "insert into user (usercode,username,password,create_time,unitrole,department)" +
+                    "VALUES (?,?,?,?,?,?)";
+            Object[] params ={user.getUserCode(),user.getUserName(),user.getPassword(),user.getCreateTime(),
+                    user.getUnitRole(),user.getDepartment()};
+            updateNum = BaseDao.execute(connection, sql, params, pstm);
+            BaseDao.closeResource(null,pstm,null);
+        }
+        return updateNum;
     }
 
 }

@@ -8,8 +8,10 @@ import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RoleServiceImpl implements RoleService{
     private RoleDao roleDao;
@@ -32,6 +34,7 @@ public class RoleServiceImpl implements RoleService{
         } finally {
             BaseDao.closeResource(connection,null,null);
         }
+        roleList =  roleList.stream().distinct().collect(Collectors.toList());
         return roleList;
     }
 
@@ -39,6 +42,12 @@ public class RoleServiceImpl implements RoleService{
     public void test(){
         RoleServiceImpl roleService = new RoleServiceImpl();
         List<Unit> roleList = roleService.getRoleList();
+        System.out.println("---------"+roleList.toArray());//.lang.Object;@4e41089d
+        //com.nankang.pojo.Unit@32a068d1, com.nankang.pojo.Unit@33cb5951, com.nankang.pojo.Unit@365c30cc]
+        System.out.println("================="+Arrays.toString(roleList.toArray()));
+        /*  系统管理员
+            普通用户
+            普通用户*/
         for (Unit unit : roleList ){
             System.out.println(unit.getUnitName());
         }

@@ -27,37 +27,11 @@
                     <input type="password" name="userPassword" id="userPassword" value=""> 
 					<font color="red"></font>
                 </div>
-                <div>
-                    <label for="ruserPassword">确认密码：</label>
-                    <input type="password" name="ruserPassword" id="ruserPassword" value=""> 
-					<font color="red"></font>
-                </div>
-                <div>
-                    <label >用户性别：</label>
-					<select name="gender" id="gender">
-					    <option value="1" selected="selected">男</option>
-					    <option value="2">女</option>
-					 </select>
-                </div>
-                <div>
-                    <label for="birthday">出生日期：</label>
-                    <input type="text" Class="Wdate" id="birthday" name="birthday" 
-					readonly="readonly" onclick="WdatePicker();">
-					<font color="red"></font>
-                </div>
-                <div>
-                    <label for="phone">用户电话：</label>
-                    <input type="text" name="phone" id="phone" value=""> 
-					<font color="red"></font>
-                </div>
-                <div>
-                    <label for="address">用户地址：</label>
-                   <input name="address" id="address"  value="">
-                </div>
+
                 <div>
                     <label >用户角色：</label>
                     <!-- 列出所有的角色分类 -->
-					<select name="userRole" id="userRole"></select>
+					<select name="unitRole" id="unitRole"></select>
 	        		<font color="red"></font>
                 </div>
                 <div class="providerAddBtn">

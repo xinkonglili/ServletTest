@@ -7,8 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class RoleDaoImpl implements RoleDao{
     //获取部门列表
@@ -18,10 +18,11 @@ public class RoleDaoImpl implements RoleDao{
         PreparedStatement pstm = null;
         ResultSet rs = null;
         ArrayList<Unit> roleList = new ArrayList<Unit>();
+
         if (connection!=null){
-            String sql = "select * from unit";
+            String sql = "select * from `unit`";
             Object[] params = {};
-            rs = BaseDao.execute(connection,sql,params,rs,pstm);
+            rs = BaseDao.execute(connection,sql,params, rs, pstm);
             while (rs.next()){
                 Unit unit = new Unit();
                 unit.setUnitCode(rs.getInt("unitcode"));//从数据库里面读，然后set
@@ -29,8 +30,13 @@ public class RoleDaoImpl implements RoleDao{
                 unit.setUserName(rs.getString("username"));
                 roleList.add(unit);
             }
-            BaseDao.closeResource(null,pstm,rs);
         }
-        return roleList;
+        BaseDao.closeResource(null,pstm,rs);
+
+       // roleList = (ArrayList<Unit>) roleList.stream().distinct().collect(Collectors.toList());
+
+        List list = roleList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(()->new TreeSet<>(Comparator.comparing(Unit::getUnitCode))),ArrayList::new));
+
+        return list;
     }
 }

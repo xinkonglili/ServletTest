@@ -10,6 +10,7 @@ $(function(){
 	birthday = $("#birthday");
 	phone = $("#phone");
 	userRole = $("#userRole");
+	unitRole = $("#unitRole");
 	saveBtn = $("#save");
 	backBtn = $("#back");
 	
@@ -17,6 +18,7 @@ $(function(){
 	birthday.next().html("*");
 	phone.next().html("*");
 	userRole.next().html("*");
+	unitRole.next().html("*");
 	
 	
 	$.ajax({
@@ -27,7 +29,8 @@ $(function(){
 		success:function(data){//data：返回数据（json对象）
 			if(data != null){
 				var rid = $("#rid").val();
-				userRole.html("");
+				//userRole.html("");
+				unitRole.html("");
 				var options = "<option value=\"0\">请选择</option>";
 				for(var i = 0; i < data.length; i++){
 					//alert(data[i].id);
@@ -39,11 +42,11 @@ $(function(){
 					}
 					
 				}
-				userRole.html(options);
+				unitRole.html(options);
 			}
 		},
 		error:function(data){//当访问时候，404，500 等非200的错误状态码
-			validateTip(userRole.next(),{"color":"red"},imgNo+" 获取用户角色列表error",false);
+			validateTip(unitRole.next(),{"color":"red"},imgNo+" 获取用户角色列表error",false);
 		}
 	});
 	

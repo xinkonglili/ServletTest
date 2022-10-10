@@ -38,6 +38,15 @@
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
 
+    <!--注册UserServlet页面-->
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>com.nankang.servlet.user.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/jsp/user.do</url-pattern>
+    </servlet-mapping>
 
     <!--字符编码过滤-->
     <filter>
