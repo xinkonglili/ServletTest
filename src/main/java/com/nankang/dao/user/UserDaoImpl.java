@@ -120,6 +120,7 @@ public class UserDaoImpl implements UserDao {
                 user.setUserName(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setUnitRole(rs.getString("unitRole"));
+                user.setUnitName(rs.getString("unitName"));
                 user.setCreateTime(rs.getTimestamp("create_time"));
                 user.setDepartment(rs.getString("department"));
                 userList.add(user);
@@ -151,6 +152,20 @@ public class UserDaoImpl implements UserDao {
             BaseDao.closeResource(null,pstm,null);
         }
         return updateNum;
+    }
+
+
+    //根据用户id删除该用户
+    public int deleteUserById(Connection connection, Integer delId) throws Exception {
+        PreparedStatement pstm=null;
+        int deleteNum=0;
+        if(connection!=null){
+            String sql="DELETE FROM `user` WHERE id=?";
+            Object[] params={delId};
+            deleteNum=BaseDao.execute(connection,sql,params,pstm);
+            BaseDao.closeResource(null,pstm,null);
+        }
+        return deleteNum;
     }
 
 }

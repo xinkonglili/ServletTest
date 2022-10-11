@@ -86,6 +86,7 @@ public class UserServiceImpl implements UserService{
         return userList;
     }
 
+
     @Override
     public Boolean add(User user) throws Exception {
         boolean flag = false;
@@ -119,6 +120,22 @@ public class UserServiceImpl implements UserService{
         }
         return flag;
     }
+
+    @Override
+    public boolean deleteUserById(Integer delId) {
+        Boolean flag=false;
+        Connection connection=null;
+        connection=BaseDao.getConnection();
+        try {
+            int deleteNum=userDao.deleteUserById(connection,delId);
+            if(deleteNum>0)flag=true;
+        } catch (Exception e) {
+        }finally {
+            BaseDao.closeResource(connection,null,null);
+        }
+        return flag;
+    }
+
 
 
     @Test

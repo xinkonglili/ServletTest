@@ -1,9 +1,11 @@
 package com.nankang.servlet.user;
 
+import com.alibaba.fastjson.JSONArray;
 import com.nankang.pojo.Unit;
 import com.nankang.pojo.User;
 import com.nankang.service.role.RoleService;
 import com.nankang.service.role.RoleServiceImpl;
+import com.nankang.service.user.UserService;
 import com.nankang.service.user.UserServiceImpl;
 import com.nankang.util.PageSupport;
 import lombok.SneakyThrows;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class UserServlet extends HttpServlet {
@@ -28,6 +31,8 @@ public class UserServlet extends HttpServlet {
             }
         } else if (method != null && method.equals("query")){
             this.query(req, resp);
+        } else if (method != null && method.equals("delUser")) {
+            this.delUser(req, resp);
         }
     }
 
@@ -138,10 +143,36 @@ public class UserServlet extends HttpServlet {
             //request:请求转发:整个过程只有一个请求，一个响应
             req.getRequestDispatcher("useradd.jsp");
         }
-
-
     }
 
 
+    private void delUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        String id = req.getParameter("uid");
+        Integer delId = 0;
+        try{
+            delId = Integer.parseInt(id);
+        }catch (Exception e) {
+            // TODO: handle exception
+            delId = 0;
+        }
+        //需要判断是否能删除成功
+        HashMap<String, String> resultMap = new HashMap<String, String>();
+        if(delId <= 0){
+            resultMap.put("delResult", "notexist");
+        }else{
+            UserService userService = new UserServiceImpl();
+            if(userService.deleteUserById(delId)){
+                resultMap.put("delResult", "true");
+            }else{
+                resultMap.put("delResult", "false");
+            }
+        }
 
+        //把resultMap转换成json对象输出
+        resp.setContentType("application/json");
+        PrintWriter outPrintWriter = resp.getWriter();
+        outPrintWriter.write(JSONArray.toJSONString(resultMap));
+        outPrintWriter.flush();
+        outPrintWriter.close();
+    }
 }

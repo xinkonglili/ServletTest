@@ -9,8 +9,19 @@ public class User {
     private String password;
     private String createTime;
 
+
+
+    private String unitName;
+
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
     }
 
     public String getUnitRole() {

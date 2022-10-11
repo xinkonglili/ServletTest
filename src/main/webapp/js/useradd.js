@@ -144,12 +144,12 @@ $(function(){
 	});*/
 	
 	userRole.bind("focus",function(){
-		validateTip(userRole.next(),{"color":"#666666"},"* 请选择用户角色",false);
+		validateTip(userRole.next(),{"color":"#666666"},"* 请选择所属单位",false);
 	}).bind("blur",function(){
 		if(userRole.val() != null && userRole.val() > 0){
 			validateTip(userRole.next(),{"color":"green"},imgYes,true);
 		}else{
-			validateTip(userRole.next(),{"color":"red"},imgNo + " 请重新选择用户角色",false);
+			validateTip(userRole.next(),{"color":"red"},imgNo + " 请重新选择所属单位",false);
 		}
 	});
 

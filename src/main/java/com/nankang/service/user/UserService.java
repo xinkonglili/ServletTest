@@ -17,4 +17,5 @@ public interface UserService {
     public List<User> getUserList(String queryUserName, int queryUnitRole, int currentPageNo, int pageSize);
 
     public Boolean add(User user) throws Exception;
+    public boolean deleteUserById(Integer delId);
 }
