@@ -11,48 +11,45 @@
 			<input type="hidden" name="method" value="modifyexe">
 			<input type="hidden" name="uid" value="${user.id }"/>
 			 <div>
-                    <label for="userName">用户名称：</label>
-                    <input type="text" name="userName" id="userName" value="${user.userName }"> 
+                    <label for="userCode">用户编码：</label>
+                    <input type="text" name="userCode" id="userCode" value="${user.userCode }">
 					<font color="red"></font>
              </div>
-			 <div>
-                    <label >用户性别：</label>
-                    <select name="gender" id="gender">
-						<c:choose>
-							<c:when test="${user.gender == 1 }">
-								<option value="1" selected="selected">男</option>
-					    		<option value="2">女</option>
-							</c:when>
-							<c:otherwise>
-								<option value="1">男</option>
-					    		<option value="2" selected="selected">女</option>
-							</c:otherwise>
-						</c:choose>
-					 </select>
-             </div>
-			 <div>
-                    <label for="data">出生日期：</label>
-                    <input type="text" Class="Wdate" id="birthday" name="birthday" value="${user.birthday }"
-					readonly="readonly" onclick="WdatePicker();">
-                    <font color="red"></font>
-              </div>
-			
-		       <div>
-                    <label for="userphone">用户电话：</label>
-                    <input type="text" name="phone" id="phone" value="${user.phone }"> 
-                    <font color="red"></font>
-               </div>
-                <div>
-                    <label for="userAddress">用户地址：</label>
-                    <input type="text" name="address" id="address" value="${user.address }">
-                </div>
-				<div>
-                    <label >用户角色：</label>
-                    <!-- 列出所有的角色分类 -->
-					<input type="hidden" value="${user.userRole }" id="rid" />
-					<select name="userRole" id="userRole"></select>
-        			<font color="red"></font>
-                </div>
+            <div>
+                <label for="userName">用户名称：</label>
+                <input type="text" name="userName" id="userName" value="${user.userName }">
+                <font color="red"></font>
+            </div>
+
+            <div>
+                <label for="department">所属部门：</label>
+                <input type="text" name="department" id="department" value="${user.department }">
+                <font color="red"></font>
+            </div>
+
+            <div>
+                <label for="userdepartmentid">所属部门：</label>
+                <input type="text" name="userdepartmentid" id="userdepartmentid" value="${user.userDepartmentId }">
+                <font color="red"></font>
+            </div>
+
+        <%--    <div>
+                <label >所属单位：</label>
+                <!-- 列出所有的角色分类 -->
+                <input type="hidden" value="${user.userdepartmentid }" id="rid1" />
+                <select name="userdepartmentid" id="userdepartmentid"></select>
+                <font color="red"></font>
+            </div>--%>
+
+
+            <div>
+                <label >所属单位：</label>
+                <!-- 列出所有的角色分类 -->
+                <input type="hidden" value="${user.unitRole }" id="rid" />
+                <select name="unitRole" id="unitRole"></select>
+                <font color="red"></font>
+            </div>
+
 			 <div class="providerAddBtn">
                     <input type="button" name="save" id="save" value="保存" />
                     <input type="button" id="back" name="back" value="返回"/>

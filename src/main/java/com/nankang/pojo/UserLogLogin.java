@@ -6,6 +6,17 @@ public class UserLogLogin {
     private String  introduce;
     private Integer addDate; //添加时间
     private Integer registerDate; //注册时间
+    private String createTime; //用户上次登录的时间
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+
 
     public Integer getId() {
         return id;

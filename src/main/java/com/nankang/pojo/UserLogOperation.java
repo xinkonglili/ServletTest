@@ -4,12 +4,10 @@ import java.util.Date;
 
 public class UserLogOperation {
     private Integer id;
-    private Integer operationId;
-    private Integer target;
-    private Integer type;
-    private Integer userId;
-    private Integer companyId;
-    private Integer departmentId;
+    private String operationId;
+    private String type;
+    private Integer companyName;
+    private Integer departmentName;
     private String dataBefore;
     private String dataAfter;
     private Date time;
@@ -22,52 +20,36 @@ public class UserLogOperation {
         this.id = id;
     }
 
-    public Integer getOperationId() {
+    public String getOperationId() {
         return operationId;
     }
 
-    public void setOperationId(Integer operationId) {
+    public void setOperationId(String operationId) {
         this.operationId = operationId;
     }
 
-    public Integer getTarget() {
-        return target;
-    }
-
-    public void setTarget(Integer target) {
-        this.target = target;
-    }
-
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getCompanyName() {
+        return companyName;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setCompanyName(Integer companyName) {
+        this.companyName = companyName;
     }
 
-    public Integer getCompanyId() {
-        return companyId;
+    public Integer getDepartmentName() {
+        return departmentName;
     }
 
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
-    }
-
-    public Integer getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartmentName(Integer departmentName) {
+        this.departmentName = departmentName;
     }
 
     public String getDataBefore() {

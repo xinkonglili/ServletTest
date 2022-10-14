@@ -3,7 +3,9 @@ package com.nankang.service.role;
 import com.nankang.dao.BaseDao;
 import com.nankang.dao.role.RoleDao;
 import com.nankang.dao.role.RoleDaoImpl;
+import com.nankang.pojo.Department;
 import com.nankang.pojo.Unit;
+import com.nankang.pojo.User;
 import org.junit.Test;
 
 import java.sql.Connection;
@@ -36,6 +38,41 @@ public class RoleServiceImpl implements RoleService{
         }
         roleList =  roleList.stream().distinct().collect(Collectors.toList());
         return roleList;
+    }
+
+
+    @Override
+    public List<Unit> getUnitList() {
+        //获取连接
+        Connection connection = null;
+        List<Unit> unitList = null;
+        try {
+            connection = BaseDao.getConnection();
+            unitList = roleDao.getUnitList(connection);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection,null,null);
+        }
+        unitList =  unitList.stream().distinct().collect(Collectors.toList());
+        return unitList;
+    }
+
+    @Override
+    public List<Department> getDepartmentList() {
+        //获取连接
+        Connection connection = null;
+        List<Department> departmentList = null;
+        try {
+            connection = BaseDao.getConnection();
+            departmentList = roleDao.getDepartmentList(connection);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection,null,null);
+        }
+     //   departmentList =  departmentList.stream().distinct().collect(Collectors.toList());
+        return departmentList;
     }
 
     @Test

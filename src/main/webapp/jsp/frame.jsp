@@ -6,6 +6,7 @@
 
         <%--从session里面拿到username--%>
         <h2>${userSession.userName }</h2>
+            <p></p>
         <p>欢迎来到房地产用户订单管理系统!</p>
     </div>
 </div>

@@ -27,16 +27,36 @@
                     <input type="password" name="userPassword" id="userPassword" value=""> 
 					<font color="red"></font>
                 </div>
+                <div>
+                    <label for="userCode">单位编码：</label>
+                    <input type="text" name="unitCode" id="unitCode" value="">
+                    <!-- 放置提示信息 -->
+                    <font color="red"></font>
+                </div>
 
                 <div>
-                    <label >用户角色：</label>
-                    <!-- 列出所有的角色分类 -->
+                    <label >单位角色：</label>
+                    <!-- 列出所有的单位角色分类--来自哪个公司 -->
 					<select name="unitRole" id="unitRole"></select>
-	        		<font color="red"></font>
                 </div>
+                <div>
+                    <label >部门角色：</label>
+                    <!-- 列出所有的单位角色分类--来自哪个部门，userDepartmentId是部门表里面的部门号对应的id -->
+                    <select name="userDepartmentId" id="userDepartmentId"></select>
+                </div>
+
+
+              <%--  <div>
+                    <label >单位角色：：</label>
+                    <select name="unitRole" id="unitRole">
+                        <option value="1" selected="selected">南康科技有限公司</option>
+                        <option value="2">上海科技有限公司</option>
+                        <option value="3">徐汇科技有限公司</option>
+                    </select>
+                </div>--%>
                 <div class="providerAddBtn">
-                    <input type="button" name="add" id="add" value="保存" >
-					<input type="button" id="back" name="back" value="返回" >
+                    <input type="submit" name="add" id="add" value="保存" >
+					<input type="submit" id="back" name="back" value="返回" >
                 </div>
             </form>
         </div>

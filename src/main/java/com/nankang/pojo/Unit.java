@@ -8,6 +8,15 @@ public class Unit { //单位表
     private String address;
     private String fax;
     private Integer status;
+    private Integer departmentId;
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
 
     public Integer getUnitCode() {
         return unitCode;

@@ -1,6 +1,7 @@
 package com.nankang.servlet.user;
 
 import com.nankang.pojo.User;
+import com.nankang.pojo.UserLogLogin;
 import com.nankang.service.user.UserService;
 import com.nankang.service.user.UserServiceImpl;
 import com.nankang.util.Constants;
@@ -37,45 +38,23 @@ public class LoginServlet extends HttpServlet {
         }
         System.out.println("LoginServlet----"+userCode);
         System.out.println("LoginServlet----"+userName);
-        if (null!=user&& code.equalsIgnoreCase(vcode)){
+        try {
+            UserLogLogin userLoginTime = userService.getUserLoginTime(userName);
+            System.out.println("获取用户的上次登录时间userLoginTime--->"+ userLoginTime);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if (null!=user&& code.equalsIgnoreCase(vcode)){ ///查有此人，可以登录
             req.setCharacterEncoding("UTF-8");
             resp.setContentType("text/html;charset=utf-8");
-            String lastAccessTime=null;
-            Cookie[]cookies=req.getCookies();
-            // 遍历Cookie数组，取出上次访问时间
-            for(int i=0;cookies!=null&&i<cookies.length;i++){
-                if("lastAccess".equals(cookies[i].getName())){
-                    lastAccessTime= URLDecoder.decode(cookies[i].getValue());
-                    break;
-                }
-            }
-            // 用户第一次请求时，lastAccessTime为null
-            // 非第一次请求时，lastAccessTime不为null
-            if(lastAccessTime==null){
-                Date date = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy日MM年dd月 HH:mm:ss");
-                resp.getWriter().print("你是首次访问本站！"+ sdf.format(date));
-            }else {
-                Date date = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy日MM年dd月 HH:mm:ss");
-                resp.getWriter().print( "您现在的访问时间是："+sdf.format(date)+"   上次的访问时间是："+lastAccessTime);
-            }
-            // 每次进入都需要将当前时间更新进Cookie，覆盖原来记录的时间
-            // 设置过期时间 10天
-            /**
-             * 关于设置Cookie的value时报错：Cookie值中存在无效字符 的问题
-             * 此处应在设置时统一编码和解码方式：
-             * Cookie cookie=new Cookie("lastAccess", URLEncoder.encode(currentTime));
-             * lastAccessTime=URLDecoder.decode(cookies[i].getValue());
-             */
-
-            String currentTime=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
-            Cookie cookie=new Cookie("lastAccess", URLEncoder.encode(currentTime));
-            cookie.setMaxAge(10*24*60*60);
-            resp.addCookie(cookie);
-
             //将用户信息放到session中
             req.getSession().setAttribute(Constants.USER_SESSION,user);
+//            HttpSession session1 = req.getSession();
+            /*session1.setAttribute(Constants.USER_SESSION,user);
+            User userrr = (User) session1.getAttribute(Constants.USER_SESSION);
+           *//* System.out.println("==========="+userrr.getUserCode() );
+            System.out.println("77577777777845====="+user.getUserCode());*/
+
             //跳转到主页重定向
             resp.sendRedirect("jsp/frame.jsp");
 
