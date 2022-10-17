@@ -66,6 +66,15 @@ input {
     display: inline-block;
 }
 
+.uploadmsg{
+    margin-right: 200px;
+    margin-left: 150px;
+    padding: 3px;
+}
+.uploadmagsubmit{
+    margin-left: 150px;
+    padding: 3px;
+}
 .inputbox {
     height: 45px;
 }

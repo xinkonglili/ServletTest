@@ -30,8 +30,9 @@
          <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
          <nav>
              <ul class="list">
-                 <li ><a href="${pageContext.request.contextPath }/jsp/bill.do?method=query">单位管理</a></li>
-              <li><a href="${pageContext.request.contextPath }/jsp/provider.do?method=query">部门管理</a></li>
+
+              <%--<li><a href="${pageContext.request.contextPath }/jsp/department.do?method=query">部门管理</a></li>--%>
+                 <li ><a href="${pageContext.request.contextPath }/jsp/unit.do?method=query">单位管理</a></li>
               <li><a href="${pageContext.request.contextPath }/jsp/user.do?method=query">用户管理</a></li>
               <li><a href="${pageContext.request.contextPath }/jsp/pwdmodify.jsp">统计管理</a></li>
               <li><a href="${pageContext.request.contextPath }/jsp/logout.do">操作日志</a></li>

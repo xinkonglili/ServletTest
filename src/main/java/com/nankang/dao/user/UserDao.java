@@ -22,7 +22,7 @@ public interface UserDao {
 
     //获取用户列表
     public List<User> getUserList(Connection connection, String userName, int unitRole,int currentPageNo, int pageSize) throws SQLException;
-    public List<User> getUserListDepartment(Connection connection, String userName, int userDepartmentId,int currentPageNo, int pageSize) throws SQLException;
+    public List<User> getUserListDepartment(Connection connection, String userName, int DepartmentId,int currentPageNo, int pageSize) throws SQLException;
     public int add(Connection connection,User user) throws Exception;
 
     public int deleteUserById(Connection connection, Integer delId) throws Exception;

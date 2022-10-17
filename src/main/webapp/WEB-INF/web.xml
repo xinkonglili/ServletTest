@@ -48,6 +48,41 @@
         <url-pattern>/jsp/user.do</url-pattern>
     </servlet-mapping>
 
+
+    <!--注册UnitServlet页面-->
+    <servlet>
+        <servlet-name>UnitServlet</servlet-name>
+        <servlet-class>com.nankang.servlet.user.UnitServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UnitServlet</servlet-name>
+        <url-pattern>/jsp/unit.do</url-pattern>
+    </servlet-mapping>
+
+    <!--文件上传下载-->
+    <servlet>
+        <servlet-name>FileServlet</servlet-name>
+        <servlet-class>com.nankang.servlet.fileupload.FileServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FileServlet</servlet-name>
+        <url-pattern>/jsp/upload.do</url-pattern>
+    </servlet-mapping>
+
+
+
+    <!-- &lt;!&ndash;注册UserServlet页面&ndash;&gt;
+     <servlet>
+         <servlet-name>UserServlet</servlet-name>
+         <servlet-class>com.nankang.servlet.user.UserServlet</servlet-class>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>UserServlet</servlet-name>
+         <url-pattern>/jsp/unit.do</url-pattern>
+     </servlet-mapping>
+ -->
     <!--字符编码过滤-->
     <filter>
         <filter-name>filter</filter-name>

@@ -1,7 +1,10 @@
 var userName = null;
 var userCode = null;
+var unitCode = null;
 var unitName = null;
 var unitRole = null;
+var departmentId = null;
+var userDepartmentId = null;
 var saveBtn = null;
 var backBtn = null;
 
@@ -11,36 +14,71 @@ $(function(){
 	unitName = $("#unitName");
 	userCode = $("#userCode");
 	unitRole = $("#unitRole");
+	unitCode = $("#unitCode");
+	departmentId = $("#departmentId");
+	userDepartmentId = $("#userDepartmentId");
 	saveBtn = $("#save");
 	backBtn = $("#back");
 	
 	userName.next().html("*");
 	userCode.next().html("*");
 	unitRole.next().html("*");
+	unitCode.next().html("*");
+	departmentId.next().html("*");
+	userDepartmentId.next().html("*");
 	
 	
 	$.ajax({
 		type:"GET",//请求类型
 		url:path+"/jsp/user.do",//请求的url
-		data:{method:"getrolelist"},//请求参数
+		data:{method:"getunitlist"},//请求参数
 		dataType:"json",//ajax接口（请求url）返回的数据类型
 		success:function(data){//data：返回数据（json对象）
 			if(data != null){
 				var rid = $("#rid").val();
-				unitRole.html("");
+				unitCode.html("");
 				var options = "<option value=\"0\">请选择</option>";
 				for(var i = 0; i < data.length; i++){
-					if(rid != null && rid != undefined && data[i].id == rid ){
-						options += "<option selected=\"selected\" value=\""+data[i].id+"\" >"+data[i].unitName+"</option>";
+					if(rid != null && rid != undefined && data[i].unitCode == rid ){
+						options += "<option selected=\"selected\" value=\""+data[i].unitCode+"\" >"+data[i].unitName+"</option>";
 					}else{
-						options += "<option value=\""+data[i].id+"\" >"+data[i].unitName+"</option>";
+						options += "<option value=\""+data[i].unitCode+"\" >"+data[i].unitName+"</option>";
 					}
+
+					var json = JSON.stringify(data[i]);
+					console.log("json----->"+json)
 				}
-				unitRole.html(options);
+				unitCode.html(options);
 			}
 		},
 		error:function(data){//当访问时候，404，500 等非200的错误状态码
-			validateTip(unitRole.next(),{"color":"red"},imgNo+" 获取用户角色列表error",false);
+			validateTip(unitCode.next(),{"color":"red"},imgNo+" 获取用户角色列表error",false);
+		}
+	});
+
+
+	$.ajax({
+		type:"GET",//请求类型
+		url:path+"/jsp/user.do",//请求的url
+		data:{method:"getdepartmentlist"},//请求参数
+		dataType:"json",//ajax接口（请求url）返回的数据类型
+		success:function(data){//data：返回数据（json对象）
+			if(data != null){
+				var rid = $("#rid1").val();
+				userDepartmentId.html("");
+				var options = "<option value=\"1\">请选择</option>";
+				for(var i = 0; i < data.length; i++){
+					if(rid != null && rid != undefined && data[i].departmentNameId == rid1 ){
+						options += "<option selected=\"selected\" value=\""+data[i].departmentNameId+"\" >"+data[i].departmentName+"</option>";
+					}else{
+						options += "<option value=\""+data[i].departmentNameId+"\" >"+data[i].departmentName+"</option>";
+					}
+				}
+				userDepartmentId.html(options);
+			}
+		},
+		error:function(data){//当访问时候，404，500 等非200的错误状态码
+			validateTip(userDepartmentId.next(),{"color":"red"},imgNo+" 获取用户角色列表error",false);
 		}
 	});
 

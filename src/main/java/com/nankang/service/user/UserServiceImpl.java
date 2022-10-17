@@ -3,6 +3,7 @@ package com.nankang.service.user;
 import com.nankang.dao.BaseDao;
 import com.nankang.dao.user.UserDao;
 import com.nankang.dao.user.UserDaoImpl;
+import com.nankang.pojo.Department;
 import com.nankang.pojo.User;
 import com.nankang.pojo.UserLogLogin;
 import org.junit.Test;
@@ -88,11 +89,6 @@ public class UserServiceImpl implements UserService{
     public List<User> getUserList(String queryUserName, int queryUnitRole, int currentPageNo, int pageSize) {
         Connection connection = null;
         List<User>  userList = null;
-        System.out.println("queryUserName------>" + queryUserName);
-        System.out.println("queryUserRole------>" + queryUnitRole);
-        System.out.println("currentPageNo------->" + currentPageNo);
-        System.out.println("pageSize------>" + pageSize);
-
         try {
             connection =BaseDao.getConnection();
             userList = userDao.getUserList(connection, queryUserName, queryUnitRole, currentPageNo, pageSize);
@@ -105,28 +101,28 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> getUserListDepartment(String queryUserName, int queryuserDepartmentId, int currentPageNo, int pageSize) {
+    public List<User> getUserListDepartment(String queryUserName, int queryUserDepartmentId, int currentPageNo, int pageSize) {
         Connection connection = null;
         List<User>  userrListDepartment = null;
         System.out.println("queryUserName------>" + queryUserName);
-        System.out.println("queryUserRole------>" + queryuserDepartmentId);
+        System.out.println("queryUserDepartmentId------>" + queryUserDepartmentId);
         System.out.println("currentPageNo------->" + currentPageNo);
         System.out.println("pageSize------>" + pageSize);
 
         try {
             connection =BaseDao.getConnection();
-            userrListDepartment = userDao.getUserList(connection, queryUserName, queryuserDepartmentId, currentPageNo, pageSize);
+            userrListDepartment = userDao.getUserListDepartment(connection, queryUserName, queryUserDepartmentId, currentPageNo, pageSize);
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
             BaseDao.closeResource(connection,null,null);
         }
 
-        for (User user : userrListDepartment){
+        /*for (User user : userrListDepartment){
             System.out.println("userrListDepartment----------*8*888888"+user.getUserDepartmentId());
             System.out.println("userrListDepartment----------*8*888888"+user.getUserCode());
             System.out.println("userrListDepartment----------*8*888888"+user.getDepartment());
-        }
+        }*/
         return userrListDepartment;
     }
 

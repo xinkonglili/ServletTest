@@ -72,6 +72,11 @@ public class RoleServiceImpl implements RoleService{
             BaseDao.closeResource(connection,null,null);
         }
      //   departmentList =  departmentList.stream().distinct().collect(Collectors.toList());
+        System.out.println("service中的------------getDepartmentList---------departmentList");
+        for (Department dep : departmentList){
+            System.out.println("departmentid----------->"+ dep.getDepartmentNameId());
+            System.out.println("department_name----------->"+  dep.getDepartmentName());
+        }
         return departmentList;
     }
 

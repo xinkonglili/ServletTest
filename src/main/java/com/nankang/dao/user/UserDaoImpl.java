@@ -172,22 +172,22 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getUserListDepartment(Connection connection, String userName, int userDepartmentId, int currentPageNo, int pageSize) throws SQLException {
+    public List<User> getUserListDepartment(Connection connection, String userName, int departmentId, int currentPageNo, int pageSize) throws SQLException {
         PreparedStatement pstm = null;
         ResultSet rs = null;
-        List<User> userListDepartment = new ArrayList<User>();
+        List<User> ListDepartment = new ArrayList<User>();
         if (connection != null){
             StringBuffer sql = new StringBuffer();
-            sql.append("select DISTINCT us.department as userdepartmentName, us.* from `user` us, `unit` un where un.`departmentid` = us.`userdepartmentid`");
+            sql.append("select DISTINCT us.* from user us, department depart where depart.departmentid = us.userdepartmentid");
             List<Object> list = new ArrayList<Object>();
             if (!StringUtils.isNullOrEmpty(userName)) { //如果用户名不为空
                 sql.append(" and us.userName like ?");//sql语句的拼接
                 list.add("%"+userName+"%"); //模糊查询,list默认下标为1
             }
 
-            if (userDepartmentId > 0) {
+            if (departmentId > 0) {
                 sql.append(" and us.userdepartmentid = ?");
-                list.add(userDepartmentId); //index = 1
+                list.add(departmentId); //index = 1
             }
 
             sql.append(" order by create_time desc limit ?,?");
@@ -206,15 +206,15 @@ public class UserDaoImpl implements UserDao {
                 user.setPassword(rs.getString("password"));
                 user.setUnitRole(rs.getString("unitRole"));
                 user.setUnitName(rs.getString("unitName"));
-                user.setUserDepartmentId(rs.getInt("userDepartmentId"));
+                user.setUserDepartmentId(rs.getInt("userdepartmentid"));
                 user.setCreateTime(rs.getTimestamp("create_time"));
                 user.setDepartment(rs.getString("department"));
-                userListDepartment.add(user);
+                ListDepartment.add(user);
             }
             BaseDao.closeResource(null,pstm,rs);
         }
-        System.out.println("userListDepartment------------"+userListDepartment);
-        for (User user : userListDepartment){
+        System.out.println("userListDepartment------------"+ListDepartment);
+        for (User user : ListDepartment){
            /* ����
             admin
             1*/
@@ -222,7 +222,7 @@ public class UserDaoImpl implements UserDao {
             System.out.println(user.getUserCode());
             System.out.println(user.getUnitRole());
         }
-        return userListDepartment ;
+        return ListDepartment ;
     }
 
     @Override
@@ -230,10 +230,11 @@ public class UserDaoImpl implements UserDao {
         PreparedStatement pstm = null;
         int updateNum =0;
         if (connection!=null){
-            String sql = "insert into user (usercode,username,password,create_time,unitrole,department)" +
+
+            Object[] params ={user.getUserCode(),user.getUserName(),user.getUnitRole(),
+                    user.getDepartment(),user.getUnitName(),user.getCreateTime()};
+            String sql = "insert into user (usercode,username,unitrole,department,unitname,create_time)" +
                     "VALUES (?,?,?,?,?,?)";
-            Object[] params ={user.getUserCode(),user.getUserName(),user.getPassword(),user.getCreateTime(),
-                    user.getUnitRole(),user.getDepartment()};
             updateNum = BaseDao.execute(connection, sql, params, pstm);
             BaseDao.closeResource(null,pstm,null);
         }
@@ -275,6 +276,7 @@ public class UserDaoImpl implements UserDao {
                 user.setDepartment(rs.getString("department"));
                 user.setUnitName(rs.getString("unitname"));
                 user.setUserDepartmentId(rs.getInt("userdepartmentid"));
+
             }
             BaseDao.closeResource(null,pstm,rs);
         }

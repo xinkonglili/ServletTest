@@ -27,13 +27,14 @@
                     <input type="password" name="userPassword" id="userPassword" value=""> 
 					<font color="red"></font>
                 </div>
-                <div>
-                    <label for="userCode">单位编码：</label>
+               <%-- <div>
+                    &lt;%&ndash;对应1，2，3&ndash;%&gt;
+                    <label for="unitRole">单位编码：</label>
                     <input type="text" name="unitCode" id="unitCode" value="">
                     <!-- 放置提示信息 -->
                     <font color="red"></font>
                 </div>
-
+--%>
                 <div>
                     <label >单位角色：</label>
                     <!-- 列出所有的单位角色分类--来自哪个公司 -->
@@ -42,18 +43,16 @@
                 <div>
                     <label >部门角色：</label>
                     <!-- 列出所有的单位角色分类--来自哪个部门，userDepartmentId是部门表里面的部门号对应的id -->
-                    <select name="userDepartmentId" id="userDepartmentId"></select>
+                    <select name="DepartmentId" id="DepartmentId"></select>
                 </div>
 
+                <%--通过表单上传文件get,post:上传文件大小没有限制--%>
+                <form action="${pageContext.request.contextPath}/upload.do" enctype="multipart/form-data" method="post">
+                   <%-- <p class="uploadmsg" style="margin-right: 50px">上传用户： <input type="text" name="username"></p>--%>
+                    <p class="uploadmagsubmit">上传图片： <input type="file" name="file1"></p>
+                </form>
 
-              <%--  <div>
-                    <label >单位角色：：</label>
-                    <select name="unitRole" id="unitRole">
-                        <option value="1" selected="selected">南康科技有限公司</option>
-                        <option value="2">上海科技有限公司</option>
-                        <option value="3">徐汇科技有限公司</option>
-                    </select>
-                </div>--%>
+
                 <div class="providerAddBtn">
                     <input type="submit" name="add" id="add" value="保存" >
 					<input type="submit" id="back" name="back" value="返回" >

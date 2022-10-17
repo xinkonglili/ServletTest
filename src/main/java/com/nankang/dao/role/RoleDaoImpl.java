@@ -78,17 +78,24 @@ public class RoleDaoImpl implements RoleDao{
         ResultSet rs = null;
         ArrayList<Department> departmentList = new ArrayList<Department>();
         if (connection!=null){
-            String sql = "select * from `user`";
+            String sql = "SELECT * FROM `department`";
             Object[] params = {};
             rs = BaseDao.execute(connection,sql,params, rs, pstm);
             while (rs.next()){
                 Department department = new Department();
                 //从数据库里面读，然后set
+                department.setId(rs.getInt("id"));
                 department.setDepartmentName(rs.getString("department_name"));
-                department.setDepartmentNameId(rs.getInt("departmentid"));
+                department.setDepartmentNameId(rs.getInt("departmentid")); //10.11.12，13
                 departmentList.add(department);
+
+                for (Department dep : departmentList){
+                    System.out.println("departmentid----------->"+ dep.getDepartmentNameId());
+                    System.out.println("department_name----------->"+  dep.getDepartmentName());
+                }
             }
         }
+        BaseDao.closeResource(null,pstm,rs);
         return departmentList;
     }
 }

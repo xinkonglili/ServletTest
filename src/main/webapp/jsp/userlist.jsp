@@ -13,18 +13,8 @@
 					 <%--<span>用户名：</span>
 					 <input name="queryname" class="input-text"	type="text" value="${queryUserName }">--%>
 
-
-					<span>所属部门：</span>
-					<select name="queryUserDepartment">
-						<c:if test="${roleDepartmentList != null }">
-							<option value="1">--请选择--</option>
-							<%--管理员还是普通用户--%>
-							<c:forEach var="role" items="${roleDepartmentList}">
-								<option <c:if test="${role.DepartmentId== queryUserDepartment }">selected="selected"</c:if>
-										value="${role.DepartmentId}">${role.userDepartmentId}</option>
-							</c:forEach>
-						</c:if>
-					</select>
+					<span>用户名：</span>
+					<input name="queryname" class="input-text"	type="text" value="${queryUserName }">
 
 					 <span>所属单位：</span>
 					 <select name="queryUserRole">

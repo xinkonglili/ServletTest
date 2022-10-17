@@ -22,31 +22,19 @@
             </div>
 
             <div>
-                <label for="department">所属部门：</label>
-                <input type="text" name="department" id="department" value="${user.department }">
+                <label >所属部门：</label>
+                <!-- 列出所有的部门角色分类 -->
+                <input type="hidden" value="${user.userDepartmentId }" id="rid1" />
+                <select name="userDepartmentId" id="userDepartmentId"></select>
                 <font color="red"></font>
             </div>
-
-            <div>
-                <label for="userdepartmentid">所属部门：</label>
-                <input type="text" name="userdepartmentid" id="userdepartmentid" value="${user.userDepartmentId }">
-                <font color="red"></font>
-            </div>
-
-        <%--    <div>
-                <label >所属单位：</label>
-                <!-- 列出所有的角色分类 -->
-                <input type="hidden" value="${user.userdepartmentid }" id="rid1" />
-                <select name="userdepartmentid" id="userdepartmentid"></select>
-                <font color="red"></font>
-            </div>--%>
 
 
             <div>
                 <label >所属单位：</label>
                 <!-- 列出所有的角色分类 -->
                 <input type="hidden" value="${user.unitRole }" id="rid" />
-                <select name="unitRole" id="unitRole"></select>
+                <select name="unitCode" id="unitCode"></select>
                 <font color="red"></font>
             </div>
 
