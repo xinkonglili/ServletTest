@@ -7,8 +7,30 @@ public class Unit { //单位表
     private String unitName;
     private String address;
     private String fax;
+    private String unitCodeName;
+    private String phone;
     private Integer status;
     private Integer departmentId;
+
+    public String getUnitCodeName() {
+        return unitCodeName;
+    }
+
+    public void setUnitCodeName(String unitCodeName) {
+        this.unitCodeName = unitCodeName;
+    }
+
+
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+
 
     public Integer getDepartmentId() {
         return departmentId;

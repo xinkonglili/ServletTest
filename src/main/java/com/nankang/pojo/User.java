@@ -8,7 +8,7 @@ public class User {
     private String userCode;
     private String password;
     private String createTime;
-    private Integer userDepartmentId;
+    private String userDepartmentId;
     private String unitName;
     private String unitRole; //所属单位
     private String department; //所属部门
@@ -49,11 +49,11 @@ public class User {
         this.modifyDate = modifyDate;
     }
 
-    public Integer getUserDepartmentId() {
+    public String getUserDepartmentId() {
         return userDepartmentId;
     }
 
-    public void setUserDepartmentId(Integer userDepartmentId) {
+    public void setUserDepartmentId(String userDepartmentId) {
         this.userDepartmentId = userDepartmentId;
     }
     public void setCreateTime(String createTime) {

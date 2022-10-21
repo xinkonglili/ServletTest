@@ -21,8 +21,10 @@
     </header>
 <!--时间-->
     <section class="publicTime">
-        <span id="time">2015年1月1日 11:11  星期一</span>
-        <a href="#">温馨提示：为了能正常浏览，请使用高版本浏览器！（IE10+）</a>
+
+        <span>当前登录时间：${sessionScope.currentTime } &nbsp;&nbsp;&nbsp;  </span>
+        <span>  上次登录时间：${sessionScope.lastAccessTime }</span>
+       <%-- <a href="#">温馨提示：为了能正常浏览，请使用高版本浏览器！（IE10+）</a>--%>
     </section>
  <!--主体内容-->
  <section class="publicMian ">
@@ -32,10 +34,11 @@
              <ul class="list">
 
               <%--<li><a href="${pageContext.request.contextPath }/jsp/department.do?method=query">部门管理</a></li>--%>
-                 <li ><a href="${pageContext.request.contextPath }/jsp/unit.do?method=query">单位管理</a></li>
-              <li><a href="${pageContext.request.contextPath }/jsp/user.do?method=query">用户管理</a></li>
-              <li><a href="${pageContext.request.contextPath }/jsp/pwdmodify.jsp">统计管理</a></li>
-              <li><a href="${pageContext.request.contextPath }/jsp/logout.do">操作日志</a></li>
+                  <li ><a href="${pageContext.request.contextPath }/jsp/unit.do?method=queryUnit">单位管理</a></li>
+                  <li><a href="${pageContext.request.contextPath }/jsp/user.do?method=query">用户管理</a></li>
+                  <li><a href="${pageContext.request.contextPath }/jsp/pwdmodify.jsp">统计管理</a></li>
+                  <li><a href="${pageContext.request.contextPath }/jsp/logout.do">操作日志</a></li>
+                  <li><a href="${pageContext.request.contextPath }/jsp/logout.do">退出系统</a></li>
              </ul>
          </nav>
      </div>

@@ -37,7 +37,8 @@ $(function(){
 				unitRole.html("");
 				var options = "<option value=\"0\">请选择</option>";
 				for(var i = 0; i < data.length; i++){
-					options += "<option value=\""+data[i].unitRole +"\">"+data[i].unitName+"</option>";
+					options += "<option id=\"unitCode\" name=\"unitCode\"  value=\""+data[i].unitCode +"-"+ data[i].unitName+"  \">" +data[i].unitName+"</option>";
+					/*input += "<input type=\"hidden\" name=\"field＿name\" value=\"data[i].unitName\">";*/
 				}
 				unitRole.html(options);
 			}
@@ -61,7 +62,7 @@ $(function(){
 					var json = JSON.stringify(data[i]);
 					console.log("data[i]------>"+json)
 
-					options += "<option value=\""+data[i].departmentNameId +"\">"+data[i].departmentName+"</option>";
+					options += "<option  value=\""+data[i].departmentNameId +"-"+data[i].departmentName+"\">"+data[i].departmentName+"</option>";
 				}
 				DepartmentId.html(options);
 			}
@@ -137,7 +138,19 @@ $(function(){
 			validateTip(unitRole.next(),{"color":"red"},imgNo + " 请重新选择单位角色",false);
 		}
 	});
-	
+
+	userPassword.bind("focus",function(){
+		validateTip(userPassword.next(),{"color":"#666666"},"* 密码长度必须是大于6小于20",false);
+	}).bind("blur",function(){
+		if(userPassword.val() != null && userPassword.val().length > 6
+			&& userPassword.val().length < 20 ){
+			validateTip(userPassword.next(),{"color":"green"},imgYes,true);
+		}else{
+			validateTip(userPassword.next(),{"color":"red"},imgNo + " 密码输入不符合规范，请重新输入",false);
+		}
+	});
+
+
 	addBtn.bind("click",function(){
 		if(userCode.attr("validateStatus") != "true"){
 			userCode.blur();

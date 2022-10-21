@@ -1,10 +1,10 @@
 package com.nankang.dao.user;
 
+import com.nankang.pojo.ResultUnit;
 import com.nankang.pojo.Unit;
 import com.nankang.pojo.User;
 import com.nankang.pojo.UserLogLogin;
 
-import javax.swing.plaf.PanelUI;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -22,15 +22,18 @@ public interface UserDao {
 
     //获取用户列表
     public List<User> getUserList(Connection connection, String userName, int unitRole,int currentPageNo, int pageSize) throws SQLException;
-    public List<User> getUserListDepartment(Connection connection, String userName, int DepartmentId,int currentPageNo, int pageSize) throws SQLException;
+    public List<ResultUnit> getUnitList(Connection connection, String userName, int UnitId, int currentPageNo, int pageSize) throws SQLException;
     public int add(Connection connection,User user) throws Exception;
+    public int addUnit(Connection connection, Unit unit) throws Exception;
 
     public int deleteUserById(Connection connection, Integer delId) throws Exception;
-
+    public int deleteUnitById(Connection connection, Integer delUnitId) throws Exception;
     //通过用户id来获取用户信息
     public User getUserById(Connection connection,String id) throws Exception;
+    public ResultUnit getUnitById(Connection connection,String unitCode) throws Exception;
     //修改用户信息
     public int modify(Connection connection, User user) throws SQLException;
+    public int  unitModify(Connection connection, ResultUnit resultUnit) throws SQLException;
 
     public User addOperationLog(Connection connection, User user) throws  SQLException;
 

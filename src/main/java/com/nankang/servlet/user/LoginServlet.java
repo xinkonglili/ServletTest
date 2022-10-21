@@ -19,7 +19,6 @@ import java.util.logging.SimpleFormatter;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("LoginServlet start-----");
         //获取浏览器中的用户名和密码
         String userCode = req.getParameter("userCode");
         String userName = req.getParameter("userPassword");
@@ -28,6 +27,43 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession();
         //强转，默认是object，拿到图片上的验证码
         String vcode = (String) session.getAttribute("userIdCode");
+        //显示时间
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html;charset=utf-8");
+        String lastAccessTime=null;
+        //获取当前时间
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+        String currentTime = sdf.format(new Date());
+        req.getSession().setAttribute("currentTime",currentTime);
+        Cookie[] cookies = req.getCookies();
+        //遍历Cookie数组，取出上次访问时间 lastAccessTime
+        for(int i=0;cookies!=null&&i<cookies.length;i++){
+            if("lastAccess".equals(cookies[i].getName())){
+                lastAccessTime = URLDecoder.decode(cookies[i].getValue());
+                break;
+            }
+        }
+
+        // 用户第一次请求时，lastAccessTime为null
+        // 非第一次请求时，lastAccessTime不为null
+        if(lastAccessTime==null){
+            req.getSession().setAttribute("currentTime",currentTime);
+        }else {
+            req.getSession().setAttribute("lastAccessTime",lastAccessTime);
+        }
+        // 每次进入都需要将当前时间更新进Cookie，覆盖原来记录的时间
+        // 设置过期时间 10天
+        /**
+         * 关于设置Cookie的value时报错：Cookie值中存在无效字符 的问题
+         * 此处应在设置时统一编码和解码方式：
+         * Cookie cookie=new Cookie("lastAccess", URLEncoder.encode(currentTime));
+         * lastAccessTime=URLDecoder.decode(cookies[i].getValue());
+         */
+
+        Cookie cookie=new Cookie("lastAccess", URLEncoder.encode(currentTime));
+        cookie.setMaxAge(10*24*60*60);
+        resp.addCookie(cookie);
+
         //和数据库里面的密码进行比对，调用业务层
         UserService userService = new UserServiceImpl();
         User user = null;
@@ -36,25 +72,11 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("LoginServlet----"+userCode);
-        System.out.println("LoginServlet----"+userName);
-        try {
-            UserLogLogin userLoginTime = userService.getUserLoginTime(userName);
-            System.out.println("获取用户的上次登录时间userLoginTime--->"+ userLoginTime);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         if (null!=user&& code.equalsIgnoreCase(vcode)){ ///查有此人，可以登录
             req.setCharacterEncoding("UTF-8");
             resp.setContentType("text/html;charset=utf-8");
             //将用户信息放到session中
             req.getSession().setAttribute(Constants.USER_SESSION,user);
-//            HttpSession session1 = req.getSession();
-            /*session1.setAttribute(Constants.USER_SESSION,user);
-            User userrr = (User) session1.getAttribute(Constants.USER_SESSION);
-           *//* System.out.println("==========="+userrr.getUserCode() );
-            System.out.println("77577777777845====="+user.getUserCode());*/
-
             //跳转到主页重定向
             resp.sendRedirect("jsp/frame.jsp");
 

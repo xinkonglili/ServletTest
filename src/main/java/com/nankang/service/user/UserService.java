@@ -1,5 +1,7 @@
 package com.nankang.service.user;
 
+import com.nankang.pojo.ResultUnit;
+import com.nankang.pojo.Unit;
 import com.nankang.pojo.User;
 import com.nankang.pojo.UserLogLogin;
 
@@ -17,14 +19,19 @@ public interface UserService {
     //根据条件查询用户列表
     public List<User> getUserList(String queryUserName, int queryUnitRole, int currentPageNo, int pageSize);
 
-    public List<User> getUserListDepartment(String queryUserName, int queryUserDepartmentId, int currentPageNo, int pageSize);
+    public List<ResultUnit> getUnitList(String queryUserName, int queryUnitName, int currentPageNo, int pageSize);
     public Boolean add(User user) throws Exception;
+    public Boolean addUnit(Unit unit) throws Exception;
     public boolean deleteUserById(Integer delId);
+    public boolean deleteUnitById(Integer delUnitId);
 
     public User getUserById(String id) throws Exception;
+    public ResultUnit getUnitById(String unitCode) throws Exception;
 
     //修改用户的信息
     public Boolean modify(User user) throws Exception;
+    public Boolean  unitModify(ResultUnit resultUnit) throws Exception;
+
     //根据用户编码，判断用户是否存在
     public User selectUserCodeExist(String userCode);
 }

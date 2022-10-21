@@ -49,6 +49,7 @@
     </servlet-mapping>
 
 
+
     <!--注册UnitServlet页面-->
     <servlet>
         <servlet-name>UnitServlet</servlet-name>
@@ -58,6 +59,16 @@
     <servlet-mapping>
         <servlet-name>UnitServlet</servlet-name>
         <url-pattern>/jsp/unit.do</url-pattern>
+    </servlet-mapping>
+
+    <!--    注册注销页面-->
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.nankang.servlet.user.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/jsp/logout.do</url-pattern>
     </servlet-mapping>
 
     <!--文件上传下载-->

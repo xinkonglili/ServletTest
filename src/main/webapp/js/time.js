@@ -1,3 +1,4 @@
+/*
 //时间
 function fn(){
     var time = new Date();
@@ -44,3 +45,4 @@ function totwo(n){
 
 
 
+*/

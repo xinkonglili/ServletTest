@@ -10,8 +10,6 @@
             <div class="search">
            		<form method="get" action="${pageContext.request.contextPath }/jsp/user.do">
 					<input name="method" value="query" class="input-text" type="hidden">
-					 <%--<span>用户名：</span>
-					 <input name="queryname" class="input-text"	type="text" value="${queryUserName }">--%>
 
 					<span>用户名：</span>
 					<input name="queryname" class="input-text"	type="text" value="${queryUserName }">
@@ -52,6 +50,7 @@
 							<span>${user.userName }</span>
 						</td>
 						<td><span>${user.unitName }</span></td>
+
 						<td><span>${user.department }</span></td>
 
 						<td>

@@ -40,23 +40,25 @@
                     <!-- 列出所有的单位角色分类--来自哪个公司 -->
 					<select name="unitRole" id="unitRole"></select>
                 </div>
+
                 <div>
                     <label >部门角色：</label>
                     <!-- 列出所有的单位角色分类--来自哪个部门，userDepartmentId是部门表里面的部门号对应的id -->
                     <select name="DepartmentId" id="DepartmentId"></select>
                 </div>
 
-                <%--通过表单上传文件get,post:上传文件大小没有限制--%>
-                <form action="${pageContext.request.contextPath}/upload.do" enctype="multipart/form-data" method="post">
-                   <%-- <p class="uploadmsg" style="margin-right: 50px">上传用户： <input type="text" name="username"></p>--%>
+<%--                &lt;%&ndash;通过表单上传文件get,post:上传文件大小没有限制&ndash;%&gt;--%>
+<%--                <form action="${pageContext.request.contextPath}/upload.do" enctype="multipart/form-data" method="post">--%>
+<%--                   &lt;%&ndash; <p class="uploadmsg" style="margin-right: 50px">上传用户： <input type="text" name="username"></p>&ndash;%&gt;--%>
                     <p class="uploadmagsubmit">上传图片： <input type="file" name="file1"></p>
-                </form>
+
 
 
                 <div class="providerAddBtn">
                     <input type="submit" name="add" id="add" value="保存" >
-					<input type="submit" id="back" name="back" value="返回" >
+					<input type="cancel" id="back" name="back" value="返回" >
                 </div>
+
             </form>
         </div>
 </div>

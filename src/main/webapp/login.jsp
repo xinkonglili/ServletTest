@@ -7,9 +7,6 @@
     <title>系统登录 - 管理系统</title>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath }/css/style.css" />
     <script type="text/javascript">
-	/* if(top.location!=self.location){
-	      top.location=self.location;
-	 } */
     </script>
 </head>
 <body class="login_bg">
@@ -34,9 +31,6 @@
                     <%--Math.random()防止有缓存--%>
                     <input type="password" id="userIdCode" name="userIdCode" placeholder="请输入验证码" required/><img src="code" style="padding: 4px; margin: -15px;margin-left: 4px;" onclick="this.src='code?'+Math.random();"><br/><br/>
                 </div>
-
-
-
 
                 <div class="subBtn">
 					

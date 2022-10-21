@@ -9,5 +9,6 @@ import java.util.List;
 public interface RoleService {
     public List<Unit>  getRoleList();
     public List<Unit> getUnitList();
+    public List<Unit> getNewUnitList();
     public List<Department> getDepartmentList();
 }

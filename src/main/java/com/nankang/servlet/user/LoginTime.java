@@ -18,24 +18,27 @@ public class LoginTime extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
         String lastAccessTime=null;
-        Cookie[]cookies=request.getCookies();
-        // 遍历Cookie数组，取出上次访问时间
+        //获取当前时间
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy日MM年dd月 HH:mm:ss");
+        String currentTime = sdf.format(new Date());
+        request.getSession().setAttribute("currentTime",currentTime);
+
+        Cookie[] cookies = request.getCookies();
+        // 遍历Cookie数组，取出上次访问时间 lastAccessTime
         for(int i=0;cookies!=null&&i<cookies.length;i++){
             if("lastAccess".equals(cookies[i].getName())){
-                lastAccessTime=URLDecoder.decode(cookies[i].getValue());
+                lastAccessTime = URLDecoder.decode(cookies[i].getValue());
                 break;
             }
         }
+
         // 用户第一次请求时，lastAccessTime为null
         // 非第一次请求时，lastAccessTime不为null
         if(lastAccessTime==null){
-            Date date = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy日MM年dd月 HH:mm:ss");
-            response.getWriter().print("你是首次访问本站！"+ sdf.format(date));
+            request.getSession().setAttribute("currentTime",currentTime);
         }else {
-            Date date = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy日MM年dd月 HH:mm:ss");
-            response.getWriter().print( "您现在的访问时间是："+sdf.format(date)+"   上次的访问时间是："+lastAccessTime);
+            request.getSession().setAttribute("lastAccessTime",lastAccessTime);
         }
         // 每次进入都需要将当前时间更新进Cookie，覆盖原来记录的时间
         // 设置过期时间 10天
@@ -45,7 +48,7 @@ public class LoginTime extends HttpServlet {
          * Cookie cookie=new Cookie("lastAccess", URLEncoder.encode(currentTime));
          * lastAccessTime=URLDecoder.decode(cookies[i].getValue());
          */
-        String currentTime=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+
         Cookie cookie=new Cookie("lastAccess", URLEncoder.encode(currentTime));
         cookie.setMaxAge(10*24*60*60);
         response.addCookie(cookie);
@@ -53,5 +56,6 @@ public class LoginTime extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request,response);
     }
 }

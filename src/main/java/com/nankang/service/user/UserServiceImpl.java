@@ -3,7 +3,8 @@ package com.nankang.service.user;
 import com.nankang.dao.BaseDao;
 import com.nankang.dao.user.UserDao;
 import com.nankang.dao.user.UserDaoImpl;
-import com.nankang.pojo.Department;
+import com.nankang.pojo.ResultUnit;
+import com.nankang.pojo.Unit;
 import com.nankang.pojo.User;
 import com.nankang.pojo.UserLogLogin;
 import org.junit.Test;
@@ -101,29 +102,22 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> getUserListDepartment(String queryUserName, int queryUserDepartmentId, int currentPageNo, int pageSize) {
+    public List<ResultUnit> getUnitList(String queryUnitName, int queryUnitRole, int currentPageNo, int pageSize) {
         Connection connection = null;
-        List<User>  userrListDepartment = null;
-        System.out.println("queryUserName------>" + queryUserName);
-        System.out.println("queryUserDepartmentId------>" + queryUserDepartmentId);
-        System.out.println("currentPageNo------->" + currentPageNo);
-        System.out.println("pageSize------>" + pageSize);
+        List<ResultUnit> userListDepartment = null;
+        System.out.println("queryUnitRole-->"+queryUnitRole);
 
         try {
+            //queryUnitRole 对应unitid，但是接受到的竟然是0
             connection =BaseDao.getConnection();
-            userrListDepartment = userDao.getUserListDepartment(connection, queryUserName, queryUserDepartmentId, currentPageNo, pageSize);
+            userListDepartment = userDao.getUnitList(connection, queryUnitName, queryUnitRole, currentPageNo, pageSize);
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
             BaseDao.closeResource(connection,null,null);
         }
 
-        /*for (User user : userrListDepartment){
-            System.out.println("userrListDepartment----------*8*888888"+user.getUserDepartmentId());
-            System.out.println("userrListDepartment----------*8*888888"+user.getUserCode());
-            System.out.println("userrListDepartment----------*8*888888"+user.getDepartment());
-        }*/
-        return userrListDepartment;
+        return userListDepartment;
     }
 
 
@@ -165,12 +159,64 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public Boolean addUnit(Unit unit) throws Exception {
+        boolean flag = false;
+        Connection connection = null;
+
+        try {
+            //获取连接
+            connection = BaseDao.getConnection();
+            //开启jdbc事务管理
+            connection.setAutoCommit(false);
+            //调用dao层的接口
+            // user.setCreateTime();
+            int updateRows = userDao.addUnit(connection, unit);
+
+
+            connection.commit();
+            if (updateRows>0){
+                flag = true;
+                System.out.println("Add success!");
+            }else {
+                System.out.println("Add failed!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                //失败就回滚
+                connection.rollback();
+            }catch (SQLException e1){
+                e1.printStackTrace();
+            }
+        }finally {
+            //在service层对connection的关闭
+            BaseDao.closeResource(connection,null,null);
+        }
+        return flag;
+    }
+
+    @Override
     public boolean deleteUserById(Integer delId) {
         Boolean flag=false;
         Connection connection=null;
         connection=BaseDao.getConnection();
         try {
             int deleteNum=userDao.deleteUserById(connection,delId);
+            if(deleteNum>0)flag=true;
+        } catch (Exception e) {
+        }finally {
+            BaseDao.closeResource(connection,null,null);
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean deleteUnitById(Integer delUnitId) {
+        Boolean flag=false;
+        Connection connection=null;
+        connection=BaseDao.getConnection();
+        try {
+            int deleteNum=userDao.deleteUnitById(connection,delUnitId);
             if(deleteNum>0)flag=true;
         } catch (Exception e) {
         }finally {
@@ -192,6 +238,21 @@ public class UserServiceImpl implements UserService{
             BaseDao.closeResource(connection,null,null);
         }
         return user;
+    }
+
+    @Override
+    public ResultUnit getUnitById(String unitCode) throws Exception {
+        ResultUnit unit = new ResultUnit();
+        Connection connection = null;
+        try {
+            connection = BaseDao.getConnection();
+            unit = userDao.getUnitById(connection,unitCode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            BaseDao.closeResource(connection,null,null);
+        }
+        return unit;
     }
 
     @Override
@@ -225,6 +286,36 @@ public class UserServiceImpl implements UserService{
         return flag;
     }
 
+    @Override
+    public Boolean unitModify(ResultUnit resultUnit) throws Exception {
+        Boolean flag = false;
+        Connection connection = null;
+
+        try {
+            connection = BaseDao.getConnection();
+            connection.setAutoCommit(false);
+            int updateNum = userDao.unitModify(connection,resultUnit);
+            connection.commit(); //提交事务
+            if (updateNum>0){
+                flag = true;
+                System.out.println("修改用户成功");
+            }else {
+                System.out.println("修改用户失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            //若抛出异常，则说明修改失败需要回滚
+            System.out.println("修改失败，回滚事务");
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                e.printStackTrace();
+            }
+        } finally {
+            BaseDao.closeResource(connection,null,null);
+        }
+        return flag;
+    }
 
 
     @Override

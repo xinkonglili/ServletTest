@@ -11,7 +11,6 @@ import com.nankang.service.user.UserService;
 import com.nankang.service.user.UserServiceImpl;
 import com.nankang.util.Constants;
 import com.nankang.util.PageSupport;
-import lombok.SneakyThrows;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -52,10 +51,10 @@ public class UserServlet extends HttpServlet {
             this.userCodeExist(req, resp);
         }
         else if (method != null && method.equals("getunitlist")) {
-            //查询当前用户编码是否存在
             this.getUnitList(req, resp);
-        } else if (method != null && method.equals("getdepartmentlist")) {
-            //查询当前部门编码是否存在
+        } else if (method != null && method.equals("getnewunitlist")) {
+            this.getNewUnitList(req, resp);
+        }else if (method != null && method.equals("getdepartmentlist")) {
             this.getDepartmentList(req, resp);
         }
     }
@@ -99,34 +98,21 @@ public class UserServlet extends HttpServlet {
         //从前端获取数据
         String queryUserName = req.getParameter("queryname");
         String temp = req.getParameter("queryUserRole");
-        String temp1 = req.getParameter("queryUserDepartmentId");
         String pageIndex = req.getParameter("pageIndex");
         int queryUserRole=0;
-        int queryUserDepartmentId=0;
         //获取用户列表
         UserServiceImpl userService = new UserServiceImpl();
-        UserServiceImpl departmentService =  new UserServiceImpl();
         List<User> userList = null;
-        List<User> departmentList = null;
 
         //第一次走这个请求一定是第一页，页面大小是固定的
         int pageSize = 5; //写到配置文件中
         int currentPageNo = 1;
-
-        //输出控制台，显示参数的当前值
-        System.out.println("queryUserName servlet--------"+queryUserName);
-        System.out.println("queryUserRole servlet--------"+queryUserRole);
-        System.out.println("queryUserDepartment servlet--------"+queryUserDepartmentId);
-        System.out.println("query pageIndex--------- > " + pageIndex);
 
         if (queryUserName == null){
             queryUserName = "";
         }
         if (temp!=null && !temp.equals((""))){
             queryUserRole = Integer.parseInt(temp);//将字符串数字temp，转成正常数字
-        }
-        if (temp1!=null && !temp1.equals((""))){
-            queryUserDepartmentId = Integer.parseInt(temp1);//将字符串数字temp1，转成正常数字
         }
 
         if (pageIndex != null){
@@ -136,7 +122,6 @@ public class UserServlet extends HttpServlet {
 
         //获取用户的总数
         int totalCount = userService.getUserCount(queryUserName, queryUserRole);
-        int totalCount1 = departmentService.getUserCount(queryUserName,queryUserDepartmentId);
         //总也页数的支持
         PageSupport pageSupport = new PageSupport();
         pageSupport.setCurrentPageNo(currentPageNo);
@@ -152,26 +137,18 @@ public class UserServlet extends HttpServlet {
         }
 
         //单位查询：获取用户列表展示
-        userList = userService.getUserList(queryUserName,queryUserRole,currentPageNo,pageSize);
-        departmentList = departmentService.getUserListDepartment(queryUserName,queryUserDepartmentId,currentPageNo,pageSize);
-
-
+        userList = userService.getUserList(queryUserName, queryUserRole,currentPageNo,pageSize);
         req.setAttribute("userList", userList); //通过前端页面的foreach去遍历的
-        req.setAttribute("departmentList", departmentList); //通过前端页面的foreach去遍历的
         //查找单位角色列表
         RoleServiceImpl roleService = new RoleServiceImpl();
         List<Unit> roleList = roleService.getRoleList();//拿到所有的角色
-        List<Department> departmentList1 = roleService.getDepartmentList();
 
         /*Set set = new HashSet();
         set.addAll(roleList);*/
         req.setAttribute("userList",userList);
         req.setAttribute("roleList",roleList);
-        req.setAttribute("departmentList",departmentList);
-        req.setAttribute("departmentList1",departmentList1);
 
         req.setAttribute("totalCount",totalCount);
-        req.setAttribute("totalCount",totalCount1);
         req.setAttribute("currentPageNo",currentPageNo);
         req.setAttribute("totalPageCount",totalPageCount);
 
@@ -192,9 +169,21 @@ public class UserServlet extends HttpServlet {
         //从前端得到页面的请求的参数即用户的值
         String userCode = req.getParameter("userCode");
         String userName = req.getParameter("userName");
-        String unitCode = req.getParameter("unitCode");
-        String password = req.getParameter("password");
         String unitRole = req.getParameter("unitRole");
+        String departmentId = req.getParameter("DepartmentId");
+        String[] split1 = departmentId.split("-");
+        System.out.println("----------------------");
+        for (int i= 0;i<split1.length;i++){
+            System.out.println("split1---->"+split1[i]);
+        }
+
+        System.out.println("-------------------");
+        String[] split = unitRole.split("-");
+        for (int i= 0;i<split.length;i++){
+            System.out.println("split---->"+split[i]);
+        }
+        String password = req.getParameter("password");
+
         String department = req.getParameter("department");
         String createTime = req.getParameter("createTime");
         //把这些值塞进一个用户的属性中
@@ -202,8 +191,10 @@ public class UserServlet extends HttpServlet {
         user.setUserCode(userCode);
         user.setUserName(userName);
         user.setPassword(password);
-        user.setUnitRole(unitRole);
-        user.setDepartment(department);
+        user.setUnitRole(split[0]);
+        user.setUnitName(split[1]);
+        user.setUserDepartmentId(split1[0]);
+        user.setDepartment(split1[1]);
         user.setCreateTime(new Date());
         //查找当前正在登陆的用户的id
         user.setCreatedBy(((User)req.getSession().getAttribute(Constants.USER_SESSION)).getId());
@@ -314,13 +305,47 @@ public class UserServlet extends HttpServlet {
         List<Unit> unitList = null;
         RoleService roleService = new RoleServiceImpl();
         unitList = roleService.getUnitList();
-        //把roleList转换成json对象输出
+
+        /*
+        unit----------->南康科技有限公司
+        unit----------->1
+        unit----------->上海科技有限公司
+        unit----------->2
+        unit----------->徐汇科技有限公司
+        unit----------->3
+        */
+        /*for (Unit unit : unitList) {
+            System.out.println("unit----------->" + unit.getUnitName());
+            System.out.println("unit----------->" + unit.getUnitCode());
+        }*/
+        //把unitList转换成json对象输出
         resp.setContentType("application/json");
         PrintWriter outPrintWriter = resp.getWriter();
         outPrintWriter.write(JSONArray.toJSONString(unitList));
         outPrintWriter.flush();
         outPrintWriter.close();
     }
+
+
+    //得到新部门角色表
+    private void getNewUnitList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        List<Unit> newUnitList = null;
+        UserServiceImpl newUnitService = new UserServiceImpl();
+        RoleServiceImpl roleService = new RoleServiceImpl();
+       // newUnitList = newUnitService.getUserListDepartment();
+        for (Unit unit : newUnitList) {
+            System.out.println("newUnitList----------->" + unit.getUnitName());
+            System.out.println("newUnitList----------->" + unit.getUnitCode());
+            System.out.println("newUnitList----------->" + unit.getAddress());
+        }
+        //把unitList转换成json对象输出
+        resp.setContentType("application/json");
+        PrintWriter outPrintWriter = resp.getWriter();
+        outPrintWriter.write(JSONArray.toJSONString(newUnitList));
+        outPrintWriter.flush();
+        outPrintWriter.close();
+    }
+
 
 
 

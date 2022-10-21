@@ -70,7 +70,6 @@ public class RoleDaoImpl implements RoleDao{
 
         return list;
     }
-
     @Override
     public List<Department> getDepartmentList(Connection connection) throws Exception {
         //查询用户列表
@@ -89,10 +88,10 @@ public class RoleDaoImpl implements RoleDao{
                 department.setDepartmentNameId(rs.getInt("departmentid")); //10.11.12，13
                 departmentList.add(department);
 
-                for (Department dep : departmentList){
+               /* for (Department dep : departmentList){
                     System.out.println("departmentid----------->"+ dep.getDepartmentNameId());
                     System.out.println("department_name----------->"+  dep.getDepartmentName());
-                }
+                }*/
             }
         }
         BaseDao.closeResource(null,pstm,rs);
