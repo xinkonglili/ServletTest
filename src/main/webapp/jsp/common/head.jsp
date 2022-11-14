@@ -36,9 +36,7 @@
               <%--<li><a href="${pageContext.request.contextPath }/jsp/department.do?method=query">部门管理</a></li>--%>
                   <li ><a href="${pageContext.request.contextPath }/jsp/unit.do?method=queryUnit">单位管理</a></li>
                   <li><a href="${pageContext.request.contextPath }/jsp/user.do?method=query">用户管理</a></li>
-                  <li><a href="${pageContext.request.contextPath }/jsp/pwdmodify.jsp">统计管理</a></li>
-                  <li><a href="${pageContext.request.contextPath }/jsp/logout.do">操作日志</a></li>
-                  <li><a href="${pageContext.request.contextPath }/jsp/logout.do">退出系统</a></li>
+
              </ul>
          </nav>
      </div>

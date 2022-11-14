@@ -1,9 +1,6 @@
 package com.nankang.service.user;
 
-import com.nankang.pojo.ResultUnit;
-import com.nankang.pojo.Unit;
-import com.nankang.pojo.User;
-import com.nankang.pojo.UserLogLogin;
+import com.nankang.pojo.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -20,8 +17,8 @@ public interface UserService {
     public List<User> getUserList(String queryUserName, int queryUnitRole, int currentPageNo, int pageSize);
 
     public List<ResultUnit> getUnitList(String queryUserName, int queryUnitName, int currentPageNo, int pageSize);
-    public Boolean add(User user) throws Exception;
-    public Boolean addUnit(Unit unit) throws Exception;
+    public Boolean addUser(User user) throws Exception;
+    public Boolean addUnit(UnitPOVO unitpovo) throws Exception;
     public boolean deleteUserById(Integer delId);
     public boolean deleteUnitById(Integer delUnitId);
 

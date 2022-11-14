@@ -29,7 +29,6 @@
                 <font color="red"></font>
             </div>
 
-
             <div>
                 <label >所属单位：</label>
                 <!-- 列出所有的角色分类 -->
@@ -39,7 +38,7 @@
             </div>
 
 			 <div class="providerAddBtn">
-                    <input type="button" name="save" id="save" value="保存" />
+                    <input type="submit" name="save" id="save" value="保存" />
                     <input type="button" id="back" name="back" value="返回"/>
                 </div>
             </form>

@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao {
                 user.setUserCode(rs.getString("usercode"));
                 user.setUserName(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
-                user.setUnitRole(rs.getString("unitRole"));
+                user.setUnitRole(Integer.valueOf(rs.getString("unitRole")));
                 user.setCreateTime(rs.getTimestamp("create_time"));
                 user.setDepartment(rs.getString("department"));
             }
@@ -153,7 +153,7 @@ public class UserDaoImpl implements UserDao {
                 user.setUserCode(rs.getString("usercode"));
                 user.setUserName(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
-                user.setUnitRole(rs.getString("unitRole"));
+                user.setUnitRole(Integer.valueOf(rs.getString("unitRole")));
                 user.setUnitName(rs.getString("unitName"));
                 user.setCreateTime(rs.getTimestamp("create_time"));
                 user.setDepartment(rs.getString("department"));
@@ -209,15 +209,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int add(Connection connection, User user) throws Exception {
+    public int addUser(Connection connection, User user) throws Exception {
         PreparedStatement pstm = null;
         int updateNum =0;
         if (connection!=null){
 
             Object[] params ={user.getUserCode(),user.getUserName(),user.getPassword(),user.getUnitRole(),
-                    user.getDepartment(),user.getUserDepartmentId(),user.getUnitName(),user.getCreateTime()};
-            String sql = "insert into user (usercode,username,password,unitrole,department,userdepartmentid,unitname,create_time)" +
-                    "VALUES (?,?,?,?,?,?,?,?)";
+                    user.getDepartment(),user.getUserDepartmentId(),user.getUnitName(),user.getCreateTime(),user.getImages()};
+            String sql = "insert into user (usercode,username,password,unitrole,department,userdepartmentid,unitname,create_time,image)" +
+                    "VALUES (?,?,?,?,?,?,?,?,?)";
             updateNum = BaseDao.execute(connection, sql, params, pstm);
             BaseDao.closeResource(null,pstm,null);
         }
@@ -226,19 +226,42 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int addUnit(Connection connection, Unit unit) throws Exception {
+    public int addUnit(Connection connection, UnitPOVO unitpovo) throws Exception {
         PreparedStatement pstm = null;
         int updateNum =0;
         if (connection!=null){
 
-            Object[] params ={unit.getUnitCode(),unit.getUnitName(),
-                    unit.getAddress(),unit.getPhone(),unit.getFax(),unit.getUnitCodeName()};
+            Object[] params ={unitpovo.getUnitCode(),unitpovo.getUnitName(),
+                    unitpovo.getAddress(),unitpovo.getPhone(),unitpovo.getFax(),unitpovo.getUnitCodeName()};
             String sql = " \n" +
                     " INSERT into unit (unitcode,unitname,address,phone,fax,unitcodename) VALUES (?,?,?,?,?,?)";
+
+
             updateNum = BaseDao.execute(connection, sql, params, pstm);
+            addDepartment(connection,unitpovo);
+            System.out.println(updateNum);
+
+
+
             BaseDao.closeResource(null,pstm,null);
         }
         return updateNum;
+    }
+
+    public int addDepartment(Connection connection, UnitPOVO unitpovo) throws Exception {
+        PreparedStatement pstm = null;
+        int updateNum1 =0;
+        if (connection!=null){
+
+            Object[] params ={unitpovo.getDepartmentName(),unitpovo.getDepartmentId(),
+                    unitpovo.getUnitCode()};
+            String sql1 = "insert into department (department_name,departmentid,unitid) VALUES(?,?,?)";
+            updateNum1 = BaseDao.execute(connection,sql1,params,pstm);
+            System.out.println(updateNum1);
+
+            BaseDao.closeResource(null,pstm,null);
+        }
+        return updateNum1;
     }
 
 
@@ -284,10 +307,10 @@ public class UserDaoImpl implements UserDao {
                 user.setUserName(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setCreateTime(rs.getDate("create_time"));
-                user.setUnitRole(rs.getString("unitrole"));
+                user.setUnitRole(Integer.valueOf(rs.getString("unitrole")));
                 user.setDepartment(rs.getString("department"));
                 user.setUnitName(rs.getString("unitname"));
-                user.setUserDepartmentId(rs.getString("userdepartmentid"));
+                user.setUserDepartmentId(rs.getInt("userdepartmentid"));
 
             }
             BaseDao.closeResource(null,pstm,rs);
@@ -322,9 +345,9 @@ public class UserDaoImpl implements UserDao {
         int updateNum = 0; //更新数据的条数
         PreparedStatement pstm = null;
         if (null!=connection){
-            String sql = "UPDATE user set username = ?,usercode =?,unitrole =?, unitname = ? where id = ? ";
+            String sql = "UPDATE user set username = ?,usercode =?,unitname =?, department = ? where id = ? ";
             Object[] params ={user.getUserName(),user.getUserCode(),
-                    user.getUnitRole(),user.getUnitName(), user.getId()};
+                    user.getUnitName(),user.getDepartment(), user.getId()};
             updateNum =BaseDao.execute(connection,sql,params,pstm);
             BaseDao.closeResource(null,pstm,null);
         }
@@ -337,9 +360,14 @@ public class UserDaoImpl implements UserDao {
         int updateNum = 0; //更新数据的条数
         PreparedStatement pstm = null;
         if (null!=connection){
-            String sql = "UPDATE unit set unitname = ?,unitcode =?,address =?, phone = ?, fax = ? where unitcode = ? ";
-            Object[] params ={resultUnit.getUnitCode(),resultUnit.getUnitName(),
-                    resultUnit.getAddress(),resultUnit.getPhone(), resultUnit.getFax()};
+            String sql = "UPDATE unit set unitname = ? fax = ? where unitcode = ? ";
+            System.out.println("-----fax----"+resultUnit.getFax());
+            System.out.println(resultUnit.getPhone());
+            System.out.println(resultUnit.getUnitName());
+            System.out.println(resultUnit.getUnitCode());
+
+
+            Object[] params ={resultUnit.getUnitName(), resultUnit.getFax(),resultUnit.getUnitCode()};
             updateNum =BaseDao.execute(connection,sql,params,pstm);
             BaseDao.closeResource(null,pstm,null);
         }

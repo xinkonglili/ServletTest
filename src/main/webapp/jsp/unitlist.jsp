@@ -14,23 +14,11 @@
             <span>单位名：</span>
             <input name="queryunitname" class="input-text"	type="text" value="${queryUnitName }">
 
-            <span>所属单位：</span>
-            <select name="queryUnitRole">
-                <c:if test="${newUnitList != null }">
-                    <option value="0">--请选择--</option>
-                    <%--管理员还是普通用户--%>
-                    <c:forEach var="role" items="${newUnitList}">
-                        <option <c:if test="${role.unitCode == queryUnitRole }">selected="selected"</c:if>
-                                value="${role.unitCode}">${role.unitName}</option>
-                    </c:forEach>
-                </c:if>
-            </select>
-
-
 
             <input type="hidden" name="pageIndex" value="1"/>
             <input	value="查 询" type="submit" id="searchbutton">
             <a href="${pageContext.request.contextPath}/jsp/unitadd.jsp" >添加部门</a>
+
         </form>
     </div>
 
@@ -42,7 +30,7 @@
             <th width="10%">单位电话</th>
             <th width="10%">单位邮件</th>
             <th width="10%">单位部门</th>
-            <th width="30%">操作</th>
+            <th width="10%">操作</th>
         </tr>
         <c:forEach var="ResultUnit" items="${newUnitList }" varStatus="status">
             <tr>
@@ -58,8 +46,8 @@
 
                 <td>
                     <span><a class="unitViewUser" href="javascript:;" ResultUnitid=${ResultUnit.unitCode} username=${ResultUnit.unitName }><img src="${pageContext.request.contextPath }/images/read.png" alt="查看" title="查看"/></a></span>
-                    <span><a class="modifyUnit" href="javascript:;" ResultUnitid=${ResultUnit.unitCode} username=${ResultUnit.unitName }><img src="${pageContext.request.contextPath }/images/xiugai.png" alt="修改" title="修改"/></a></span>
-                    <span><a class="deleteUnit" href="javascript:;" ResultUnitid=${ResultUnit.unitCode} username=${ResultUnit.unitName }><img src="${pageContext.request.contextPath }/images/schu.png" alt="删除" title="删除"/></a></span>
+                 <%--   <span><a class="modifyUnit" href="javascript:;" ResultUnitid=${ResultUnit.unitCode} unitName=${ResultUnit.unitName }  unitCode=${ResultUnit.unitCode }><img src="${pageContext.request.contextPath }/images/xiugai.png" alt="修改" title="修改"/></a></span>--%>
+                        <%--  <span><a class="deleteUnit" href="javascript:;" ResultUnitid=${ResultUnit.unitCode} username=${ResultUnit.unitName }><img src="${pageContext.request.contextPath }/images/schu.png" alt="删除" title="删除"/></a></span>--%>
                 </td>
             </tr>
         </c:forEach>
@@ -80,7 +68,7 @@
     <div class="removerChid">
         <h2>Reminder</h2>
         <div class="removeMain">
-            <p >Are you sure you want to delete this unit?</p>
+            <p >确定要删除吗</p>
             <%--  <a href="#" id="yes">Sure</a>--%>
             <a href="#" id ="yes" onclick="location.replace('unitlist.jsp') ">sure</a>
             <a href="#" id="no">Cancel</a>

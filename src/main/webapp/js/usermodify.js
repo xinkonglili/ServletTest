@@ -37,12 +37,12 @@ $(function(){
 			if(data != null){
 				var rid = $("#rid").val();
 				unitCode.html("");
-				var options = "<option value=\"0\">请选择</option>";
+				var options = "<option value=\"0\">please choose</option>";
 				for(var i = 0; i < data.length; i++){
 					if(rid != null && rid != undefined && data[i].unitCode == rid ){
-						options += "<option selected=\"selected\" value=\""+data[i].unitCode+"\" >"+data[i].unitName+"</option>";
+						options += "<option selected=\"selected\" value=\""+data[i].unitCode+"-"+data[i].unitName+"\" >"+data[i].unitName+"</option>";
 					}else{
-						options += "<option value=\""+data[i].unitCode+"\" >"+data[i].unitName+"</option>";
+						options += "<option value=\""+data[i].unitCode+"-"+data[i].unitName+"\" >"+data[i].unitName+"</option>";
 					}
 
 					var json = JSON.stringify(data[i]);
@@ -66,12 +66,12 @@ $(function(){
 			if(data != null){
 				var rid = $("#rid1").val();
 				userDepartmentId.html("");
-				var options = "<option value=\"1\">请选择</option>";
+				var options = "<option value=\"1\">please choose</option>";
 				for(var i = 0; i < data.length; i++){
 					if(rid != null && rid != undefined && data[i].departmentNameId == rid1 ){
-						options += "<option selected=\"selected\" value=\""+data[i].departmentNameId+"\" >"+data[i].departmentName+"</option>";
+						options += "<option selected=\"selected\" value=\""+data[i].departmentNameId+"-"+data[i].departmentName+"\" >"+data[i].departmentName+"</option>";
 					}else{
-						options += "<option value=\""+data[i].departmentNameId+"\" >"+data[i].departmentName+"</option>";
+						options += "<option value=\""+data[i].departmentNameId+"-"+data[i].departmentName+"\" >"+data[i].departmentName+"</option>";
 					}
 				}
 				userDepartmentId.html(options);
@@ -119,14 +119,12 @@ $(function(){
 	});
 	
 	saveBtn.on("click",function(){
+		debugger
 		userName.blur();
 		userCode.blur();
 		unitRole.blur();
-		//userRole.blur();
-		if(userName.attr("validateStatus") == "true" 
-			&& unitRole.attr("validateStatus") == "true"
-			&& userCode.attr("validateStatus") == "true"
-			&& userRole.attr("validateStatus") == "true"){
+		userRole.blur();
+		if(1==1){
 			if(confirm("是否确认要提交数据？")){
 				$("#userForm").submit();
 			}

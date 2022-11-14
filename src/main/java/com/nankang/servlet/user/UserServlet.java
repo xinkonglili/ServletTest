@@ -1,30 +1,40 @@
 package com.nankang.servlet.user;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.mysql.cj.util.StringUtils;
 import com.nankang.pojo.Department;
+import com.nankang.pojo.JsonResult;
 import com.nankang.pojo.Unit;
 import com.nankang.pojo.User;
 import com.nankang.service.role.RoleService;
 import com.nankang.service.role.RoleServiceImpl;
 import com.nankang.service.user.UserService;
 import com.nankang.service.user.UserServiceImpl;
-import com.nankang.util.Constants;
 import com.nankang.util.PageSupport;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
 public class UserServlet extends HttpServlet {
+
+    private UserServiceImpl userService = new UserServiceImpl();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String method = req.getParameter("method");//method前端页面传过来的
-        System.out.println("method---------------> " + method);
         if (method!=null&&method.equals("add")){
 
             try {
@@ -64,15 +74,20 @@ public class UserServlet extends HttpServlet {
         String id = req.getParameter("uid");
         String userName = req.getParameter("userName");
         String userCode = req.getParameter("userCode");
-        String department = req.getParameter("department");
-        String unitRole = req.getParameter("unitRole");
+        String department1 = req.getParameter("userDepartmentId");
+        String[] splits = department1.split("-");
+        String department = splits[1];
+        String unitRole1 = req.getParameter("unitCode");
+        String[] splits1 = unitRole1.split("-");
+        String unitRole = splits1[1];
+
 
         //创建一个user来接收这些参数
         User user = new User();
         user.setId(Integer.valueOf(id));
         user.setUserName(userName);
         user.setUserCode(userCode);
-        user.setUnitRole(unitRole);
+        user.setUnitName(unitRole); //南康科技有限公司
         user.setDepartment(department);
 
         //调用service层
@@ -167,47 +182,94 @@ public class UserServlet extends HttpServlet {
     public void add(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         System.out.println("正在执行用户增加操作！");
         //从前端得到页面的请求的参数即用户的值
-        String userCode = req.getParameter("userCode");
-        String userName = req.getParameter("userName");
-        String unitRole = req.getParameter("unitRole");
-        String departmentId = req.getParameter("DepartmentId");
-        String[] split1 = departmentId.split("-");
-        System.out.println("----------------------");
-        for (int i= 0;i<split1.length;i++){
-            System.out.println("split1---->"+split1[i]);
-        }
+        String userName =  req.getParameter("userName");
 
-        System.out.println("-------------------");
-        String[] split = unitRole.split("-");
-        for (int i= 0;i<split.length;i++){
-            System.out.println("split---->"+split[i]);
-        }
-        String password = req.getParameter("password");
+        User user = createUser(req);
+        List<String> images=new ArrayList<>(); //上传多张图片
+        FileItemFactory f =new DiskFileItemFactory();
+        ServletFileUpload su =new ServletFileUpload(f);
+        su.setHeaderEncoding("utf-8");
+        try{
+            List<FileItem> items =su.parseRequest(req);
+            for(FileItem item:items){
+                if(!item.isFormField()){
+                    //文件名字
+                    String filename =item.getName();
+                    //文件后缀
+                    String fExt =filename.substring(filename.lastIndexOf("."));
+                    //为了避免重复 改名
+                    String newName = UUID.randomUUID().toString().replaceAll("-","")+fExt;
 
-        String department = req.getParameter("department");
-        String createTime = req.getParameter("createTime");
-        //把这些值塞进一个用户的属性中
-        User user = new User();
+                    ServletContext application =this.getServletConfig().getServletContext();
+                    String path ="D:\\DemoTest00\\DemoTest0\\target\\DemoTest0\\upload\\"+newName;
+                    //把图片保存路径放到数据库以备下次使用
+                    item.write(new File(path));
+                    images.add("upload/"+newName);
+                }else{
+                    if(item.getFieldName().equals("departmentId")){
+                        user.setUserDepartmentId(Integer.parseInt(new String(item.getString().getBytes("ISO-8859-1"),"utf-8")));
+                    } else if (item.getFieldName().equals("userName")) {
+                        user.setUserName(new String(item.getString().getBytes("ISO-8859-1"),"utf-8"));
+                    }else if (item.getFieldName().equals("userCode")) {
+                        user.setUserCode(new String(item.getString().getBytes("ISO-8859-1"),"utf-8"));
+                    }else if (item.getFieldName().equals("unitRole")) {
+                        user.setUnitRole(Integer.valueOf(new String(item.getString().getBytes("ISO-8859-1"),"utf-8")));
+                    }else if (item.getFieldName().equals("password")) {
+                        user.setPassword(new String(item.getString().getBytes("ISO-8859-1"),"utf-8"));
+                    }
+
+                }
+            }
+            user.setImages(images.toString().substring(1,images.toString().length()-1));
+            JsonResult<User> jsonResult=new JsonResult<>();
+            jsonResult.setCode(200);
+            resp.getWriter().write(JSONObject.toJSONString(jsonResult));
+        } catch (FileUploadException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        userService.addUser(user);
+        //response请求重定向:有2个请求，2个响应
+        resp.sendRedirect(req.getContextPath()+"/jsp/user.do?method=query");
+
+     /*
         user.setUserCode(userCode);
         user.setUserName(userName);
         user.setPassword(password);
         user.setUnitRole(split[0]);
         user.setUnitName(split[1]);
-        user.setUserDepartmentId(split1[0]);
+        user.setImages(image);
+        user.setUserDepartmentId(Integer.parseInt(split1[0]));
         user.setDepartment(split1[1]);
         user.setCreateTime(new Date());
         //查找当前正在登陆的用户的id
         user.setCreatedBy(((User)req.getSession().getAttribute(Constants.USER_SESSION)).getId());
-        System.out.println("查找当前正在登陆的用户的id----->"+user.getCreatedBy());
         UserServiceImpl userService = new UserServiceImpl();
-        Boolean flag = userService.add(user);
-        if (flag){
-            //response请求重定向:有2个请求，2个响应
-            resp.sendRedirect(req.getContextPath()+"/jsp/user.do?method=query");
-        }else {
-            //request:请求转发:整个过程只有一个请求，一个响应
-            req.getRequestDispatcher("useradd.jsp");
-        }
+        Boolean flag = userService.add(user, userName);*/
+
+
+//        if (flag){
+//            //response请求重定向:有2个请求，2个响应
+//            resp.sendRedirect(req.getContextPath()+"/jsp/user.do?method=query");
+//        }else {
+//            //request:请求转发:整个过程只有一个请求，一个响应
+//            req.getRequestDispatcher("useradd.jsp");
+//        }
+    }
+
+
+    private static User createUser(HttpServletRequest req){
+        //把这些值塞进一个用户的属性中
+        String userCode = req.getParameter("userCode");
+        String userName = req.getParameter("userName");
+        String unitRole1 = req.getParameter("unitRole");
+        String departmentId1 = req.getParameter("DepartmentId");
+        String image = req.getParameter("uploadmsg");//获取图片
+        String password = req.getParameter("userPassword");
+        Integer departmentId = Integer.valueOf(departmentId1.split("-")[0]);
+        Integer unitRole = Integer.valueOf(unitRole1.split("-")[0]);
+        return new User(userCode,userName,departmentId,unitRole,image,password);
     }
 
 

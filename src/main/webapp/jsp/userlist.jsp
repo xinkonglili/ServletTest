@@ -17,7 +17,7 @@
 					 <span>所属单位：</span>
 					 <select name="queryUserRole">
 						<c:if test="${roleList != null }">
-						   <option value="0">--请选择--</option>
+						   <option value="0">--please choose--</option>
 							<%--管理员还是普通用户--%>
 						   <c:forEach var="role" items="${roleList}">
 						   		<option <c:if test="${role.unitCode == queryUserRole }">selected="selected"</c:if>
@@ -77,7 +77,7 @@
     <div class="removerChid">
         <h2>Reminder</h2>
         <div class="removeMain">
-            <p >Are you sure you want to delete this user?</p>
+            <p >确认删除么</p>
           <%--  <a href="#" id="yes">Sure</a>--%>
 			<a href="#" id ="yes" onclick="location.replace('userlist.jsp') ">sure</a>
             <a href="#" id="no">Cancel</a>

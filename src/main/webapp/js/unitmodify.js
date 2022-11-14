@@ -1,6 +1,8 @@
 var unitName = null;
 var unitCode = null;
 var userDepartmentId = null;
+var saveBtn = null;
+var backBtn = null;
 
 $(function(){
     unitName = $("#unitName");
@@ -8,7 +10,6 @@ $(function(){
     userDepartmentId = $("#userDepartmentId");
     saveBtn = $("#save");
     backBtn = $("#back");
-
 
     unitRole.next().html("*");
     unitCode.next().html("*");
@@ -90,7 +91,7 @@ $(function(){
         //userRole.blur();
         if(unitName.attr("validateStatus") == "true"
             && unitCode.attr("validateStatus") == "true"
-            && userDepartmentId.attr("validateStatus") == "true"){
+           ){
             if(confirm("是否确认要提交数据？")){
                 $("#userForm").submit();
             }

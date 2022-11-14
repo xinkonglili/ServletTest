@@ -15,19 +15,26 @@
                 <input type="text" name="unitName" id="unitName" value="${ResultUnit.unitName }">
                 <font color="red"></font>
             </div>
+
             <div>
-                <label for="unitCode">单位编号：</label>
-                <input type="text" name="unitCode" id="unitCode" value="${ResultUnit.unitCode }">
+                <label for="fax">单位邮箱：</label>
+                <input type="text" name="fax" id="fax" value="${ResultUnit.fax }">
                 <font color="red"></font>
             </div>
 
             <div>
-                <label >公司所属部门修改：</label>
-                <!-- 列出所有的部门角色分类 -->
-                <input type="hidden" value="${ResultUnit.userDepartmentId }" id="rid1" />
-                <select name="userDepartmentId" id="userDepartmentId"></select>
+                <label for="unitCode">单位编码：</label>
+                <input type="text" name="unitCode" id="unitCode" value="${ResultUnit.unitCode }">
                 <font color="red"></font>
             </div>
+
+<%--            <div>--%>
+<%--                <label >公司所属部门修改：</label>--%>
+<%--                <!-- 列出所有的部门角色分类 -->--%>
+<%--                <input type="hidden" value="${ResultUnit.userDepartmentId }" id="rid1" />--%>
+<%--                <select name="userDepartmentId" id="userDepartmentId"></select>--%>
+<%--                <font color="red"></font>--%>
+<%--            </div>--%>
 
 
             <div class="providerAddBtn">

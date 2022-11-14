@@ -3,10 +3,7 @@ package com.nankang.service.user;
 import com.nankang.dao.BaseDao;
 import com.nankang.dao.user.UserDao;
 import com.nankang.dao.user.UserDaoImpl;
-import com.nankang.pojo.ResultUnit;
-import com.nankang.pojo.Unit;
-import com.nankang.pojo.User;
-import com.nankang.pojo.UserLogLogin;
+import com.nankang.pojo.*;
 import org.junit.Test;
 
 
@@ -122,7 +119,7 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public Boolean add(User user) throws Exception {
+    public Boolean addUser(User user) throws Exception {
         boolean flag = false;
         Connection connection = null;
 
@@ -133,7 +130,7 @@ public class UserServiceImpl implements UserService{
             connection.setAutoCommit(false);
             //调用dao层的接口
            // user.setCreateTime();
-            int updateRows = userDao.add(connection, user);
+            int updateRows = userDao.addUser(connection, user);
 
 
             connection.commit();
@@ -159,7 +156,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Boolean addUnit(Unit unit) throws Exception {
+    public Boolean addUnit(UnitPOVO unitpovo) throws Exception {
         boolean flag = false;
         Connection connection = null;
 
@@ -170,7 +167,7 @@ public class UserServiceImpl implements UserService{
             connection.setAutoCommit(false);
             //调用dao层的接口
             // user.setCreateTime();
-            int updateRows = userDao.addUnit(connection, unit);
+            int updateRows = userDao.addUnit(connection, unitpovo);
 
 
             connection.commit();

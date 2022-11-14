@@ -1,9 +1,6 @@
 package com.nankang.dao.user;
 
-import com.nankang.pojo.ResultUnit;
-import com.nankang.pojo.Unit;
-import com.nankang.pojo.User;
-import com.nankang.pojo.UserLogLogin;
+import com.nankang.pojo.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,8 +20,8 @@ public interface UserDao {
     //获取用户列表
     public List<User> getUserList(Connection connection, String userName, int unitRole,int currentPageNo, int pageSize) throws SQLException;
     public List<ResultUnit> getUnitList(Connection connection, String userName, int UnitId, int currentPageNo, int pageSize) throws SQLException;
-    public int add(Connection connection,User user) throws Exception;
-    public int addUnit(Connection connection, Unit unit) throws Exception;
+    public int addUser(Connection connection, User user) throws Exception;
+    public int addUnit(Connection connection, UnitPOVO unitpovo) throws Exception;
 
     public int deleteUserById(Connection connection, Integer delId) throws Exception;
     public int deleteUnitById(Connection connection, Integer delUnitId) throws Exception;

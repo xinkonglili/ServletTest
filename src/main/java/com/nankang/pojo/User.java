@@ -8,9 +8,49 @@ public class User {
     private String userCode;
     private String password;
     private String createTime;
-    private String userDepartmentId;
+
+    public User(String userCode, String userName, Integer departmentId, Integer unitRole, String image, String password) {
+    }
+
+    public User() {
+
+    }
+
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+
+    private String images;
+
+    public int getUserDepartmentId() {
+        return userDepartmentId;
+    }
+
+    public void setUserDepartmentId(int userDepartmentId) {
+        this.userDepartmentId = userDepartmentId;
+    }
+
+    private Integer userDepartmentId;
     private String unitName;
-    private String unitRole; //所属单位
+
+    public void setUserDepartmentId(Integer userDepartmentId) {
+        this.userDepartmentId = userDepartmentId;
+    }
+
+    public Integer getUnitRole() {
+        return unitRole;
+    }
+
+    public void setUnitRole(Integer unitRole) {
+        this.unitRole = unitRole;
+    }
+
+    private Integer unitRole; //所属单位
     private String department; //所属部门
     private Integer createdBy;   //创建者
     private Date creationDate; //创建时间
@@ -49,13 +89,6 @@ public class User {
         this.modifyDate = modifyDate;
     }
 
-    public String getUserDepartmentId() {
-        return userDepartmentId;
-    }
-
-    public void setUserDepartmentId(String userDepartmentId) {
-        this.userDepartmentId = userDepartmentId;
-    }
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
@@ -67,14 +100,7 @@ public class User {
         this.unitName = unitName;
     }
 
-    public String getUnitRole() {
-        return unitRole;
-    }
-
-    public void setUnitRole(String unitRole) {
-        this.unitRole = unitRole;
-    }
-
+    
     public Integer getId() {
         return id;
     }

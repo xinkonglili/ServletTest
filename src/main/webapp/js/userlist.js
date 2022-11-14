@@ -36,8 +36,8 @@ function cancleBtn(){
 	$('#removeUse').fadeOut();
 }
 function changeDLGContent(contentStr){
-	var p = $(".removeMain").find("p");
-	p.html(contentStr);
+	/*var p = $(".removeMain").find("p");
+	p.html(contentStr);*/
 }
 
 $(function(){

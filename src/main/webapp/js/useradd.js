@@ -4,6 +4,7 @@ var userPassword = null;
 var userRole = null;/*普通员工*/
 var unitRole = null;
 var DepartmentId = null;
+var uploadmsg = null;
 var addBtn = null;
 var backBtn = null;
 
@@ -17,6 +18,7 @@ $(function(){
 	userRole = $("#userRole");
 	unitRole= $("#unitRole");
 	DepartmentId= $("#DepartmentId");
+	uploadmsg = $("#uploadmsg");
 	addBtn = $("#add");
 	backBtn = $("#back");
 	//初始化的时候，要把所有的提示信息变为：* 以提示必填项，更灵活，不要写在页面上
@@ -35,7 +37,7 @@ $(function(){
 		success:function(data){//data：返回数据（json对象）
 			if(data != null){
 				unitRole.html("");
-				var options = "<option value=\"0\">请选择</option>";
+				var options = "<option value=\"0\">please choose</option>";
 				for(var i = 0; i < data.length; i++){
 					options += "<option id=\"unitCode\" name=\"unitCode\"  value=\""+data[i].unitCode +"-"+ data[i].unitName+"  \">" +data[i].unitName+"</option>";
 					/*input += "<input type=\"hidden\" name=\"field＿name\" value=\"data[i].unitName\">";*/
@@ -57,7 +59,7 @@ $(function(){
 		success:function(data){//data：返回数据（json对象）
 			if(data != null){
 				DepartmentId.html("");
-				var options = "<option value=\"0\">请选择</option>";
+				var options = "<option value=\"0\">please choose</option>";
 				for(var i = 0; i < data.length; i++){
 					var json = JSON.stringify(data[i]);
 					console.log("data[i]------>"+json)

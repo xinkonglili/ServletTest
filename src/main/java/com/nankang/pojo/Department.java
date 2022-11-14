@@ -2,6 +2,18 @@ package com.nankang.pojo;
 
 public class Department { //部门字典表
     private Integer id;
+    private String departmentName;
+    private Integer departmentNameId;
+
+    public Integer getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(Integer unitId) {
+        this.unitId = unitId;
+    }
+
+    private Integer unitId;
 
     public Integer getId() {
         return id;
@@ -27,7 +39,6 @@ public class Department { //部门字典表
         this.departmentNameId = departmentNameId;
     }
 
-    private String departmentName;
-    private Integer departmentNameId;
+
 
 }

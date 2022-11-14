@@ -55,7 +55,7 @@ $(function(){
 
     $(".modifyUnit").on("click",function(){
         var obj = $(this);
-        window.location.href=path+"/jsp/unit.do?method=unitmodifyexe&unitid="+ obj.attr("ResultUnitid");
+        window.location.href=path+"/jsp/unit.do?method=unitmodifyexe&unitCode="+obj.attr("unitCode")+"&unitName="+obj.attr("unitName")+"&unitid="+ obj.attr("ResultUnitid");
     });
 
     $('#no').click(function () {

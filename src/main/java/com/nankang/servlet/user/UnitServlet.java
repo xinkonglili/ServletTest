@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.mysql.cj.util.StringUtils;
 import com.nankang.pojo.ResultUnit;
 import com.nankang.pojo.Unit;
+import com.nankang.pojo.UnitPOVO;
 import com.nankang.pojo.User;
 import com.nankang.service.user.UserService;
 import com.nankang.service.user.UserServiceImpl;
@@ -78,19 +79,12 @@ public class UnitServlet extends HttpServlet {
         String unitid = req.getParameter("unitid");
         String unitName = req.getParameter("unitName");
         String unitCode = req.getParameter("unitCode");
-        String departmentId = req.getParameter("userDepartmentId");
-        System.out.println("unitModifyunitModify"+unitid);
-        System.out.println("unitModifyunitModify"+unitName);
-        System.out.println("unitModifyunitModify"+unitCode);
-        System.out.println("unitModifyunitModify"+departmentId);
-        System.out.println(unitid);
+        String fax = req.getParameter("fax");
         ResultUnit unit = new ResultUnit();
         unit.setUnitName(unitName);
+        unit.setFax(fax);
         unit.setUnitCode(Integer.valueOf(unitid));
         unit.setUnitCode(Integer.valueOf(unitCode));
-        unit.setDepartmentId(departmentId);
-
-
         //调用service层
         UserServiceImpl userService = new UserServiceImpl();
         Boolean flag = userService.unitModify(unit);
@@ -188,19 +182,20 @@ public class UnitServlet extends HttpServlet {
         }
 
         //把这些值塞进一个部门的属性中
-        Unit unit = new Unit();
-        unit.setUnitCode(Integer.valueOf(unitCode));
-        unit.setUnitName(split1[1]);
-        unit.setFax(unitFax);
-        unit.setUnitName(unitName);
-        unit.setAddress(unitAddress);
-        unit.setPhone(unitPhone);
+        UnitPOVO unitpovo = new UnitPOVO();
+        unitpovo.setUnitCode(Integer.valueOf(unitCode));
+        unitpovo.setDepartmentId(Integer.valueOf(split1[0]));
+        unitpovo.setDepartmentName(split1[1]);
+        unitpovo.setFax(unitFax);
+        unitpovo.setUnitName(unitName);
+        unitpovo.setAddress(unitAddress);
+        unitpovo.setPhone(unitPhone);
 
         //查找当前正在登陆的用户的id
        // unit.setCreatedBy(((Unit)req.getSession().getAttribute(Constants.USER_SESSION)).getId());
 
         UserServiceImpl userService = new UserServiceImpl();
-            Boolean flag = userService.addUnit(unit);
+            Boolean flag = userService.addUnit(unitpovo);
         if (flag){
             //response请求重定向:有2个请求，2个响应
                 resp.sendRedirect(req.getContextPath()+"/jsp/unit.do?method=queryUnit");
